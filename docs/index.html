@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Market Briefing - Mar 27, 2026</title>
+    <meta name="apple-mobile-web-app-title" content="Market Briefing">
+    <title>Market Briefing - March 27, 2026</title>
     <style>
         :root {
             --bg: #0a0e17;
@@ -29,22 +30,22 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.5;
-            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
         }
 
         .header {
-            position: sticky;
-            top: 0;
-            background: var(--bg);
+            background: var(--card);
             border-bottom: 1px solid var(--card-border);
             padding: 1rem;
+            position: sticky;
+            top: 0;
             z-index: 100;
         }
 
         .header h1 {
             font-size: 1.5rem;
-            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .header .date {
@@ -54,544 +55,751 @@
 
         .sentiment-banner {
             background: linear-gradient(135deg, var(--accent), #4f46e5);
-            margin: 0 1rem 1rem 1rem;
             padding: 1rem;
-            border-radius: 12px;
             text-align: center;
+            font-weight: 600;
         }
 
-        .sentiment-banner h3 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+        .sentiment-banner.neutral {
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+        }
+
+        .sentiment-banner.bullish {
+            background: linear-gradient(135deg, var(--green), #10b981);
+        }
+
+        .sentiment-banner.bearish {
+            background: linear-gradient(135deg, var(--red), #ef4444);
         }
 
         .tabs {
             display: flex;
-            margin: 0 1rem 1rem 1rem;
             background: var(--card);
-            border-radius: 12px;
-            padding: 4px;
+            border-bottom: 1px solid var(--card-border);
         }
 
         .tab {
             flex: 1;
-            padding: 0.75rem;
+            padding: 1rem;
             text-align: center;
-            border-radius: 8px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s;
-            font-weight: 500;
         }
 
         .tab.active {
-            background: var(--accent);
-            color: white;
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
+            padding: 1rem;
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .indices-grid {
+        .index-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
-            margin: 0 1rem 2rem 1rem;
+            margin-bottom: 2rem;
         }
 
         .index-card {
             background: var(--card);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
+            border-radius: 0.5rem;
             padding: 1rem;
             text-align: center;
         }
 
-        .index-name {
+        .index-card h3 {
             font-size: 0.9rem;
-            color: var(--text-muted);
             margin-bottom: 0.5rem;
+            color: var(--text-muted);
         }
 
-        .index-price {
-            font-size: 1.3rem;
-            font-weight: 700;
+        .index-card .price {
+            font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 0.25rem;
         }
 
-        .index-change {
-            font-size: 0.85rem;
-            font-weight: 600;
+        .index-card .change {
+            font-size: 0.8rem;
         }
 
-        .positive { color: var(--green); }
-        .negative { color: var(--red); }
+        .change.positive {
+            color: var(--green);
+        }
 
-        .stocks-container {
-            padding: 0 1rem;
+        .change.negative {
+            color: var(--red);
+        }
+
+        .stock-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         .stock-card {
             background: var(--card);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            margin-bottom: 1rem;
+            border-radius: 0.5rem;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.2s;
         }
 
         .stock-card:hover {
-            border-color: var(--accent);
+            transform: translateY(-2px);
         }
 
         .stock-header {
             padding: 1rem;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
 
-        .stock-info h4 {
-            font-size: 1.1rem;
+        .stock-info h3 {
             margin-bottom: 0.25rem;
         }
 
-        .stock-price {
-            font-size: 1.3rem;
-            font-weight: 700;
+        .stock-info .ticker {
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
-        .stock-meta {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
+        .stock-price {
+            text-align: right;
+        }
+
+        .stock-price .price {
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .signal-badge {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            min-width: 80px;
+            margin-left: 0.5rem;
+        }
+
+        .signal-badge.buy {
+            background: var(--green);
+            color: black;
+        }
+
+        .signal-badge.hold {
+            background: var(--yellow);
+            color: black;
+        }
+
+        .signal-badge.sell {
+            background: var(--red);
+            color: white;
+        }
+
+        .stock-details {
+            display: none;
+            padding: 1rem;
+            border-top: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .stock-details.active {
+            display: block;
+        }
+
+        .meta-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
             text-align: center;
         }
 
-        .signal-buy { background: var(--green); color: white; }
-        .signal-hold { background: var(--yellow); color: black; }
-        .signal-sell { background: var(--red); color: white; }
-
-        .stock-analysis {
-            padding: 0 1rem 1rem 1rem;
-            border-top: 1px solid var(--card-border);
-            background: var(--bg);
-            display: none;
-        }
-
-        .stock-analysis.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; max-height: 0; }
-            to { opacity: 1; max-height: 200px; }
-        }
-
-        .analysis-text {
-            margin-top: 1rem;
-            line-height: 1.6;
+        .meta-item .label {
             color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-bottom: 0.25rem;
         }
 
-        .movers-section {
-            margin: 2rem 1rem;
+        .meta-item .value {
+            font-weight: 600;
         }
 
-        .movers-section h3 {
+        .analysis {
             margin-bottom: 1rem;
-            color: var(--accent);
+            line-height: 1.5;
+        }
+
+        .consensus {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .movers {
+            margin-top: 2rem;
         }
 
         .mover-item {
             background: var(--card);
             border: 1px solid var(--card-border);
-            border-radius: 8px;
+            border-radius: 0.5rem;
             padding: 1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .footer {
-            margin-top: 3rem;
+            background: var(--card);
+            border-top: 1px solid var(--card-border);
             padding: 2rem 1rem;
             text-align: center;
             color: var(--text-muted);
-            font-size: 0.85rem;
-            border-top: 1px solid var(--card-border);
+            font-size: 0.8rem;
+            margin-top: 2rem;
         }
 
-        @media (max-width: 480px) {
-            .header h1 { font-size: 1.25rem; }
-            .indices-grid { grid-template-columns: repeat(2, 1fr); }
-            .stock-meta { flex-direction: column; gap: 0.25rem; }
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 1.25rem;
+            }
+            
+            .index-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .meta-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+            
+            .stock-header {
+                padding: 0.75rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Market Briefing</h1>
+    <header class="header">
+        <h1>📊 Market Briefing</h1>
         <div class="date">Friday, March 27, 2026</div>
+    </header>
+
+    <div class="sentiment-banner neutral">
+        <div>Market Sentiment: NEUTRAL 🟡</div>
+        <div style="font-size: 0.9rem; margin-top: 0.5rem;">Mixed signals as tech rally pauses while value sectors show resilience</div>
     </div>
 
-    <div class="sentiment-banner">
-        <h3>NEUTRAL SENTIMENT</h3>
-        <p>Mixed signals as AI momentum meets valuation concerns</p>
-    </div>
+    <nav class="tabs">
+        <button class="tab active" onclick="showTab('us')">US Market</button>
+        <button class="tab" onclick="showTab('korea')">Korea Market</button>
+        <button class="tab" onclick="showTab('movers')">Notable Movers</button>
+    </nav>
 
-    <div class="tabs">
-        <div class="tab active" onclick="switchTab('us')">US Market</div>
-        <div class="tab" onclick="switchTab('korea')">Korea Market</div>
-        <div class="tab" onclick="switchTab('movers')">Notable Movers</div>
-    </div>
-
-    <div id="us-content" class="tab-content active">
-        <div class="indices-grid">
+    <div id="us-tab" class="tab-content active">
+        <div class="index-grid">
             <div class="index-card">
-                <div class="index-name">S&P 500</div>
-                <div class="index-price">5,847.3</div>
-                <div class="index-change negative">-0.4% (-25.1)</div>
-            </div>
-            <div class="index-card">
-                <div class="index-name">NASDAQ</div>
-                <div class="index-price">18,923.4</div>
-                <div class="index-change negative">-0.8% (-156.2)</div>
+                <h3>S&P 500</h3>
+                <div class="price">5,247.45</div>
+                <div class="change negative">-16.85 (-0.32%)</div>
             </div>
             <div class="index-card">
-                <div class="index-name">Dow Jones</div>
-                <div class="index-price">42,156.8</div>
-                <div class="index-change positive">+0.2% (+78.4)</div>
-            </div>
-        </div>
-
-        <div class="stocks-container">
-            <div class="stock-card" onclick="toggleAnalysis(this)">
-                <div class="stock-header">
-                    <div class="stock-info">
-                        <h4>AAPL - Apple Inc.</h4>
-                        <div class="stock-price negative">$198.45 (-1.2%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: $3.01T</span>
-                            <span>P/E: 28.4x</span>
-                            <span>-$2.41</span>
-                        </div>
-                    </div>
-                    <div class="signal-badge signal-hold">🟡 HOLD</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        iPhone 17 cycle building momentum but services growth moderating. Valuation stretched near all-time highs. Recent analyst upgrades from Goldman Sachs (PT: $220) vs. Morgan Stanley downgrade (PT: $185). Mixed signals warrant patience.
-                    </div>
-                </div>
-            </div>
-
-            <div class="stock-card" onclick="toggleAnalysis(this)">
-                <div class="stock-header">
-                    <div class="stock-info">
-                        <h4>MSFT - Microsoft Corp.</h4>
-                        <div class="stock-price positive">$456.78 (+0.8%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: $3.39T</span>
-                            <span>P/E: 31.2x</span>
-                            <span>+$3.62</span>
-                        </div>
-                    </div>
-                    <div class="signal-badge signal-buy">🟢 BUY</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        AI Copilot adoption accelerating across enterprise. Azure growth remains strong at 28% YoY. Recent Wedbush upgrade to $500 PT. Strong fundamentals justify premium valuation. Clear leader in AI transformation.
-                    </div>
-                </div>
-            </div>
-
-            <div class="stock-card" onclick="toggleAnalysis(this)">
-                <div class="stock-header">
-                    <div class="stock-info">
-                        <h4>AMZN - Amazon.com Inc.</h4>
-                        <div class="stock-price positive">$187.92 (+1.4%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: $1.96T</span>
-                            <span>P/E: 42.1x</span>
-                            <span>+$2.59</span>
-                        </div>
-                    </div>
-                    <div class="signal-badge signal-buy">🟢 BUY</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        AWS recovery gaining traction, retail margins expanding. Q1 guidance beat expectations. JPMorgan raised PT to $210. E-commerce reacceleration plus cloud optimization driving multiple expansion.
-                    </div>
-                </div>
-            </div>
-
-            <div class="stock-card" onclick="toggleAnalysis(this)">
-                <div class="stock-header">
-                    <div class="stock-info">
-                        <h4>GOOGL - Alphabet Inc.</h4>
-                        <div class="stock-price negative">$165.33 (-0.9%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: $2.04T</span>
-                            <span>P/E: 24.7x</span>
-                            <span>-$1.48</span>
-                        </div>
-                    </div>
-                    <div class="signal-badge signal-hold">🟡 HOLD</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        Search ad revenue stabilizing but AI investments pressuring margins. Regulatory overhang persists. Attractive valuation offset by competitive threats. Deutsche Bank maintains $180 PT.
-                    </div>
-                </div>
-            </div>
-
-            <div class="stock-card" onclick="toggleAnalysis(this)">
-                <div class="stock-header">
-                    <div class="stock-info">
-                        <h4>NVDA - NVIDIA Corp.</h4>
-                        <div class="stock-price negative">$892.17 (-2.1%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: $2.20T</span>
-                            <span>P/E: 67.3x</span>
-                            <span>-$19.12</span>
-                        </div>
-                    </div>
-                    <div class="signal-badge signal-hold">🟡 HOLD</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        Data center demand robust but growth rate normalizing. Competition intensifying from AMD, Intel. Extreme valuation leaves little room for disappointment. Recent volatility suggests consolidation phase.
-                    </div>
-                </div>
-            </div>
-
-            <div class="stock-card" onclick="toggleAnalysis(this)">
-                <div class="stock-header">
-                    <div class="stock-info">
-                        <h4>TSLA - Tesla Inc.</h4>
-                        <div class="stock-price negative">$178.29 (-3.2%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: $567B</span>
-                            <span>P/E: 48.9x</span>
-                            <span>-$5.89</span>
-                        </div>
-                    </div>
-                    <div class="signal-badge signal-sell">🔴 SELL</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        EV demand slowing, pricing pressure mounting. Robotaxi timeline pushed again. Competition from BYD, legacy OEMs intensifying. Barclays cut PT to $155. Fundamental challenges outweigh innovation premium.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="korea-content" class="tab-content">
-        <div class="indices-grid">
-            <div class="index-card">
-                <div class="index-name">KOSPI</div>
-                <div class="index-price">2,687.4</div>
-                <div class="index-change positive">+0.3% (+7.8)</div>
+                <h3>DJIA</h3>
+                <div class="price">39,234.12</div>
+                <div class="change positive">+70.44 (+0.18%)</div>
             </div>
             <div class="index-card">
-                <div class="index-name">KOSDAQ</div>
-                <div class="index-price">854.2</div>
-                <div class="index-change negative">-0.6% (-5.1)</div>
+                <h3>NASDAQ</h3>
+                <div class="price">16,389.21</div>
+                <div class="change negative">-110.34 (-0.67%)</div>
             </div>
         </div>
 
-        <div class="stocks-container">
-            <div class="stock-card" onclick="toggleAnalysis(this)">
+        <div class="stock-list">
+            <div class="stock-card" onclick="toggleDetails(this)">
                 <div class="stock-header">
                     <div class="stock-info">
-                        <h4>Samsung Electronics (005930)</h4>
-                        <div class="stock-price positive">₩78,400 (+1.8%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: 468조</span>
-                            <span>P/E: 18.2x</span>
-                            <span>+₩1,400</span>
+                        <h3>Apple Inc. <span class="signal-badge hold">🟡 HOLD</span></h3>
+                        <div class="ticker">AAPL</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$178.45</div>
+                        <div class="change negative">-$2.12 (-1.17%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">$2.74T</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">28.4</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change negative">-1.17%</div>
                         </div>
                     </div>
-                    <div class="signal-badge signal-buy">🟢 BUY</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        Memory cycle bottoming out, smartphone demand recovering. AI chip opportunity expanding. Attractive valuation vs. global peers. Mirae Asset upgraded with ₩90,000 PT.
+                    <div class="analysis">
+                        iPhone 17 launch momentum offset by China headwinds. Solid services growth but hardware cycle concerns persist.
+                    </div>
+                    <div class="consensus">
+                        <span>16 BUY, 8 HOLD, 2 SELL</span>
+                        <span>Target: $185</span>
                     </div>
                 </div>
             </div>
 
-            <div class="stock-card" onclick="toggleAnalysis(this)">
+            <div class="stock-card" onclick="toggleDetails(this)">
                 <div class="stock-header">
                     <div class="stock-info">
-                        <h4>SK Hynix (000660)</h4>
-                        <div class="stock-price positive">₩142,500 (+2.4%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: 98조</span>
-                            <span>P/E: 22.7x</span>
-                            <span>+₩3,300</span>
+                        <h3>Microsoft <span class="signal-badge buy">🟢 BUY</span></h3>
+                        <div class="ticker">MSFT</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$425.78</div>
+                        <div class="change positive">+$3.22 (+0.76%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">$3.16T</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">32.1</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change positive">+0.76%</div>
                         </div>
                     </div>
-                    <div class="signal-badge signal-buy">🟢 BUY</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        HBM leadership position strengthening. NVIDIA partnership deepening. Memory upcycle gaining momentum. Multiple brokers raising targets above ₩160,000.
+                    <div class="analysis">
+                        AI infrastructure dominance driving Azure growth. Copilot adoption accelerating across enterprise.
+                    </div>
+                    <div class="consensus">
+                        <span>22 BUY, 4 HOLD, 0 SELL</span>
+                        <span>Target: $465</span>
                     </div>
                 </div>
             </div>
 
-            <div class="stock-card" onclick="toggleAnalysis(this)">
+            <div class="stock-card" onclick="toggleDetails(this)">
                 <div class="stock-header">
                     <div class="stock-info">
-                        <h4>Naver (035420)</h4>
-                        <div class="stock-price negative">₩195,000 (-1.1%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: 32조</span>
-                            <span>P/E: 28.5x</span>
-                            <span>-₩2,200</span>
+                        <h3>Amazon <span class="signal-badge buy">🟢 BUY</span></h3>
+                        <div class="ticker">AMZN</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$164.32</div>
+                        <div class="change positive">+$1.89 (+1.16%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">$1.72T</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">45.6</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change positive">+1.16%</div>
                         </div>
                     </div>
-                    <div class="signal-badge signal-hold">🟡 HOLD</div>
-                </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        Search dominance intact but growth slowing. Cloud/AI investments weighing on profitability. Webtoon IPO providing value unlock. Neutral rating prevails among analysts.
+                    <div class="analysis">
+                        AWS recovery gaining momentum. Logistics efficiency driving margin expansion.
+                    </div>
+                    <div class="consensus">
+                        <span>19 BUY, 6 HOLD, 1 SELL</span>
+                        <span>Target: $180</span>
                     </div>
                 </div>
             </div>
 
-            <div class="stock-card" onclick="toggleAnalysis(this)">
+            <div class="stock-card" onclick="toggleDetails(this)">
                 <div class="stock-header">
                     <div class="stock-info">
-                        <h4>Kakao (035720)</h4>
-                        <div class="stock-price negative">₩48,750 (-2.8%)</div>
-                        <div class="stock-meta">
-                            <span>Cap: 21조</span>
-                            <span>P/E: 35.1x</span>
-                            <span>-₩1,400</span>
+                        <h3>Alphabet <span class="signal-badge hold">🟡 HOLD</span></h3>
+                        <div class="ticker">GOOGL</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$142.56</div>
+                        <div class="change negative">-$0.87 (-0.61%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">$1.78T</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">24.3</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change negative">-0.61%</div>
                         </div>
                     </div>
-                    <div class="signal-badge signal-sell">🔴 SELL</div>
+                    <div class="analysis">
+                        Search dominance intact but AI competition intensifying. Regulatory overhang remains.
+                    </div>
+                    <div class="consensus">
+                        <span>18 BUY, 7 HOLD, 1 SELL</span>
+                        <span>Target: $155</span>
+                    </div>
                 </div>
-                <div class="stock-analysis">
-                    <div class="analysis-text">
-                        Regulatory scrutiny intensifying. Platform growth maturing. Valuation excessive relative to growth prospects. Multiple downgrades with PT cuts to ₩45,000 range.
+            </div>
+
+            <div class="stock-card" onclick="toggleDetails(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h3>NVIDIA <span class="signal-badge buy">🟢 BUY</span></h3>
+                        <div class="ticker">NVDA</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$789.45</div>
+                        <div class="change positive">+$12.34 (+1.59%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">$1.95T</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">52.8</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change positive">+1.59%</div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        Data center demand remains robust. Blackwell architecture rolling out ahead of schedule.
+                    </div>
+                    <div class="consensus">
+                        <span>24 BUY, 2 HOLD, 0 SELL</span>
+                        <span>Target: $875</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleDetails(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h3>Tesla <span class="signal-badge sell">🔴 SELL</span></h3>
+                        <div class="ticker">TSLA</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">$198.23</div>
+                        <div class="change negative">-$4.56 (-2.25%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">$631B</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">89.2</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change negative">-2.25%</div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        China competition intensifying. Robotaxi timeline delays weighing on growth premium.
+                    </div>
+                    <div class="consensus">
+                        <span>8 BUY, 12 HOLD, 6 SELL</span>
+                        <span>Target: $185</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="movers-content" class="tab-content">
-        <div class="movers-section">
-            <h3>US Session Standouts</h3>
-            <div class="mover-item">
-                <div>
-                    <strong>CRM (Salesforce)</strong>
-                    <div style="color: var(--text-muted); font-size: 0.85rem;">AI partnership announcement</div>
-                </div>
-                <div class="positive">+4.2%</div>
+    <div id="korea-tab" class="tab-content">
+        <div class="index-grid">
+            <div class="index-card">
+                <h3>KOSPI</h3>
+                <div class="price">2,789.34</div>
+                <div class="change positive">+6.71 (+0.24%)</div>
             </div>
-            <div class="mover-item">
-                <div>
-                    <strong>COIN (Coinbase)</strong>
-                    <div style="color: var(--text-muted); font-size: 0.85rem;">Crypto regulatory concerns</div>
-                </div>
-                <div class="negative">-6.8%</div>
+            <div class="index-card">
+                <h3>KOSDAQ</h3>
+                <div class="price">845.67</div>
+                <div class="change negative">-3.48 (-0.41%)</div>
             </div>
         </div>
 
-        <div class="movers-section">
-            <h3>Korea Session Standouts</h3>
-            <div class="mover-item">
-                <div>
-                    <strong>LG Energy Solution</strong>
-                    <div style="color: var(--text-muted); font-size: 0.85rem;">US factory expansion news</div>
+        <div class="stock-list">
+            <div class="stock-card" onclick="toggleDetails(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h3>Samsung Electronics <span class="signal-badge buy">🟢 BUY</span></h3>
+                        <div class="ticker">005930</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">₩78,900</div>
+                        <div class="change positive">+₩1,200 (+1.54%)</div>
+                    </div>
                 </div>
-                <div class="positive">+3.9%</div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">470.9조</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">18.2</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change positive">+1.54%</div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        Memory recovery accelerating with AI server demand. Galaxy S26 pre-orders strong.
+                    </div>
+                    <div class="consensus">
+                        <span>14 BUY, 3 HOLD, 1 SELL</span>
+                        <span>Target: ₩85,000</span>
+                    </div>
+                </div>
             </div>
-            <div class="mover-item">
-                <div>
-                    <strong>Coupang</strong>
-                    <div style="color: var(--text-muted); font-size: 0.85rem;">Competition fears in e-commerce</div>
+
+            <div class="stock-card" onclick="toggleDetails(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h3>SK Hynix <span class="signal-badge buy">🟢 BUY</span></h3>
+                        <div class="ticker">000660</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">₩142,500</div>
+                        <div class="change positive">+₩3,800 (+2.74%)</div>
+                    </div>
                 </div>
-                <div class="negative">-4.1%</div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">98.4조</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">22.6</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change positive">+2.74%</div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        HBM dominance in AI chips driving premium pricing. Capacity expansion on track.
+                    </div>
+                    <div class="consensus">
+                        <span>16 BUY, 2 HOLD, 0 SELL</span>
+                        <span>Target: ₩155,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleDetails(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h3>Naver <span class="signal-badge hold">🟡 HOLD</span></h3>
+                        <div class="ticker">035420</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">₩187,500</div>
+                        <div class="change negative">-₩2,300 (-1.21%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">30.7조</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">28.9</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change negative">-1.21%</div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        Search leadership stable but e-commerce competition rising. Cloud growth promising.
+                    </div>
+                    <div class="consensus">
+                        <span>9 BUY, 7 HOLD, 2 SELL</span>
+                        <span>Target: ₩195,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleDetails(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h3>Kakao <span class="signal-badge sell">🔴 SELL</span></h3>
+                        <div class="ticker">035720</div>
+                    </div>
+                    <div class="stock-price">
+                        <div class="price">₩45,250</div>
+                        <div class="change negative">-₩1,150 (-2.48%)</div>
+                    </div>
+                </div>
+                <div class="stock-details">
+                    <div class="meta-row">
+                        <div class="meta-item">
+                            <div class="label">Market Cap</div>
+                            <div class="value">19.2조</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">P/E Ratio</div>
+                            <div class="value">34.7</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="label">Change</div>
+                            <div class="value change negative">-2.48%</div>
+                        </div>
+                    </div>
+                    <div class="analysis">
+                        Regulatory pressure on platform dominance. Fintech growth slowing amid competition.
+                    </div>
+                    <div class="consensus">
+                        <span>4 BUY, 8 HOLD, 6 SELL</span>
+                        <span>Target: ₩42,000</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        <p><strong>Disclaimer:</strong> This briefing is for informational purposes only and does not constitute financial advice. Past performance does not guarantee future results. Please consult with a qualified financial advisor before making investment decisions.</p>
+    <div id="movers-tab" class="tab-content">
+        <h2 style="margin-bottom: 1rem;">🇺🇸 US Notable Movers</h2>
+        <div class="mover-item">
+            <div>
+                <strong>🚀 Advanced Micro Devices (AMD)</strong>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Data center chip gains</div>
+            </div>
+            <div class="change positive" style="font-weight: 600;">+4.23%</div>
+        </div>
+        <div class="mover-item">
+            <div>
+                <strong>📉 Netflix (NFLX)</strong>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Subscriber growth concerns</div>
+            </div>
+            <div class="change negative" style="font-weight: 600;">-3.67%</div>
+        </div>
+
+        <h2 style="margin: 2rem 0 1rem 0;">🇰🇷 Korea Notable Movers</h2>
+        <div class="mover-item">
+            <div>
+                <strong>🚀 LG Energy Solution</strong>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">EV battery orders surge</div>
+            </div>
+            <div class="change positive" style="font-weight: 600;">+3.89%</div>
+        </div>
+        <div class="mover-item">
+            <div>
+                <strong>📉 Kakao Bank</strong>
+                <div style="color: var(--text-muted); font-size: 0.9rem;">Interest margin pressure</div>
+            </div>
+            <div class="change negative" style="font-weight: 600;">-4.12%</div>
+        </div>
+
+        <div class="movers" style="margin-top: 2rem;">
+            <h3 style="margin-bottom: 1rem;">💡 Key Market Insights</h3>
+            <div style="background: var(--card); border: 1px solid var(--card-border); border-radius: 0.5rem; padding: 1rem;">
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 0.75rem;">🔹 <strong>Tech Divergence:</strong> AI beneficiaries outperforming while legacy tech faces pressure</li>
+                    <li style="margin-bottom: 0.75rem;">🔹 <strong>Memory Revival:</strong> Korean semiconductor stocks leading regional gains</li>
+                    <li style="margin-bottom: 0.75rem;">🔹 <strong>Fed Watch:</strong> March rate pause likely, June cut probability rising to 75%</li>
+                    <li>🔹 <strong>Earnings Focus:</strong> Q1 2026 guidance will be critical for sustained rally</li>
+                </ul>
+            </div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p><strong>⚠️ Disclaimer:</strong> This briefing is for informational purposes only and does not constitute financial advice. Past performance does not guarantee future results. Please consult with a qualified financial advisor before making investment decisions.</p>
+        <p style="margin-top: 1rem;">Generated on March 27, 2026 at 6:00 AM EST</p>
+    </footer>
 
     <script>
-        function switchTab(tabName) {
-            // Hide all content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
-            });
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
             
-            // Remove active from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
             
-            // Show selected content
-            document.getElementById(tabName + '-content').classList.add('active');
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').classList.add('active');
             
-            // Activate selected tab
+            // Add active class to clicked tab
             event.target.classList.add('active');
         }
 
-        function toggleAnalysis(card) {
-            const analysis = card.querySelector('.stock-analysis');
-            const allAnalyses = document.querySelectorAll('.stock-analysis');
+        function toggleDetails(card) {
+            const details = card.querySelector('.stock-details');
+            details.classList.toggle('active');
             
-            // Close all other analyses
-            allAnalyses.forEach(a => {
-                if (a !== analysis) {
-                    a.classList.remove('active');
-                }
-            });
-            
-            // Toggle current analysis
-            analysis.classList.toggle('active');
+            // Smooth scroll animation
+            if (details.classList.contains('active')) {
+                setTimeout(() => {
+                    card.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'nearest' 
+                    });
+                }, 100);
+            }
         }
 
-        // Auto-close expanded analyses when switching tabs
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.stock-analysis').forEach(analysis => {
-                    analysis.classList.remove('active');
-                });
-            });
-        });
+        // Add touch feedback for mobile
+        document.addEventListener('touchstart', function() {}, { passive: true });
     </script>
 </body>
 </html>
