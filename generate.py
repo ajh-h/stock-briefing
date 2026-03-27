@@ -11,6 +11,7 @@ Requires: ANTHROPIC_API_KEY environment variable.
 
 import os
 import sys
+import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
@@ -90,14 +91,22 @@ def main():
 
     print(f"Generating briefing for {DISPLAY_DATE}...")
 
-    # Use extended thinking or web search if available; otherwise standard completion
-    # Note: For web search, you may need to enable it in your API plan
-    message = client.messages.create(
-        model=MODEL,
-        max_tokens=MAX_TOKENS,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": USER_PROMPT}],
-    )
+    for attempt in range(1, 4):
+        try:
+            message = client.messages.create(
+                model=MODEL,
+                max_tokens=MAX_TOKENS,
+                system=SYSTEM_PROMPT,
+                messages=[{"role": "user", "content": USER_PROMPT}],
+            )
+            break
+        except anthropic.APIStatusError as e:
+            if e.status_code == 529 and attempt < 3:
+                wait = 30 * attempt
+                print(f"API overloaded (attempt {attempt}/3), retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                raise
 
     response_text = ""
     for block in message.content:
