@@ -21,7 +21,7 @@ import anthropic
 # ---------------------------------------------------------------------------
 MODEL = "claude-sonnet-4-20250514"  # Cost-effective for daily runs; swap to opus for higher quality
 MAX_TOKENS = 12000
-SITE_DIR = Path("site")
+SITE_DIR = Path("docs")
 
 # Determine "today" in US Eastern time (the primary market timezone)
 ET = timezone(timedelta(hours=-4))  # EDT; change to -5 for EST if needed

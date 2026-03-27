@@ -27,7 +27,7 @@ if [[ ! -f "${SITE_DIR}/index.html" ]]; then
 fi
 
 # Stage changes
-git add site/
+git add docs/
 
 # Check if there are changes to commit
 if git diff --cached --quiet; then

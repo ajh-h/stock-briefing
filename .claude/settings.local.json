@@ -4,7 +4,9 @@
       "WebSearch",
       "WebFetch(domain:www.cnbc.com)",
       "WebFetch(domain:stockanalysis.com)",
-      "WebFetch(domain:finance.yahoo.com)"
+      "WebFetch(domain:finance.yahoo.com)",
+      "Bash(gh workflow:*)",
+      "Bash(gh run:*)"
     ]
   }
 }
