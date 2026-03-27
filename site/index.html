@@ -1,942 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#0a0e17">
-  <title>Morning Stock Briefing — March 27, 2026</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Market Briefing - Mar 27, 2026</title>
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --card: #131929;
+            --card-border: #1e2a3a;
+            --text: #e2e8f0;
+            --text-muted: #8892a4;
+            --green: #34d399;
+            --red: #f87171;
+            --yellow: #fbbf24;
+            --accent: #60a5fa;
+        }
 
-    :root {
-      --bg: #0a0e17;
-      --card: #131929;
-      --card2: #1a2236;
-      --border: #1e2d45;
-      --text: #e2e8f0;
-      --muted: #8899b0;
-      --pos: #22d17a;
-      --neg: #ff4d4d;
-      --neu: #f0b429;
-      --accent: #3b82f6;
-      --buy: #22d17a;
-      --hold: #f0b429;
-      --sell: #ff4d4d;
-      --bear-bg: #2d0f0f;
-      --bear-border: #7f1d1d;
-      --bear-text: #fca5a5;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      font-size: 14px;
-      -webkit-font-smoothing: antialiased;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
 
-    /* ── HEADER ─────────────────────────────────── */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10, 14, 23, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 12px 16px 10px;
-    }
-    .header-title {
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-      color: var(--text);
-    }
-    .header-subtitle {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            border-bottom: 1px solid var(--card-border);
+            padding: 1rem;
+            z-index: 100;
+        }
 
-    /* ── SENTIMENT BANNER ────────────────────────── */
-    .sentiment {
-      margin: 12px 16px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      background: var(--bear-bg);
-      border: 1px solid var(--bear-border);
-    }
-    .sentiment-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: var(--bear-text);
-      margin-bottom: 6px;
-    }
-    .sentiment-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--neg);
-      box-shadow: 0 0 6px var(--neg);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
-    }
-    .sentiment-text {
-      font-size: 12.5px;
-      color: #f1c0c0;
-      line-height: 1.5;
-    }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
 
-    /* ── TABS ────────────────────────────────────── */
-    .tabs {
-      display: flex;
-      padding: 0 16px;
-      gap: 4px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid var(--border);
-    }
-    .tab {
-      flex: 1;
-      padding: 9px 4px;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: color 0.2s, border-color 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .tab.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
+        .header .date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
 
-    /* ── SECTIONS ─────────────────────────────────── */
-    .section { display: none; padding: 12px 16px 24px; }
-    .section.visible { display: block; }
+        .sentiment-banner {
+            background: linear-gradient(135deg, var(--accent), #4f46e5);
+            margin: 0 1rem 1rem 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
 
-    .section-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 16px 0 8px;
-    }
+        .sentiment-banner h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
 
-    /* ── INDEX CARDS ──────────────────────────────── */
-    .index-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-    .index-grid.two-col {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .index-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 9px;
-    }
-    .index-name {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      margin-bottom: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .index-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.3px;
-    }
-    .index-change {
-      font-size: 11px;
-      font-weight: 600;
-      margin-top: 3px;
-    }
-    .index-change.pos { color: var(--pos); }
-    .index-change.neg { color: var(--neg); }
+        .tabs {
+            display: flex;
+            margin: 0 1rem 1rem 1rem;
+            background: var(--card);
+            border-radius: 12px;
+            padding: 4px;
+        }
 
-    /* ── DRIVERS BOX ──────────────────────────────── */
-    .drivers-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 13px;
-      margin: 10px 0 4px;
-    }
-    .drivers-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.6px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-    .drivers-text {
-      font-size: 12.5px;
-      color: #b0c0d8;
-      line-height: 1.55;
-    }
+        .tab {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
 
-    /* ── STOCK CARDS ──────────────────────────────── */
-    .stock-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 9px;
-      overflow: hidden;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.2s;
-    }
-    .stock-card.expanded { border-color: var(--accent); }
+        .tab.active {
+            background: var(--accent);
+            color: white;
+        }
 
-    .stock-card-header {
-      display: flex;
-      align-items: center;
-      padding: 12px 13px;
-      gap: 10px;
-    }
-    .stock-ticker-badge {
-      min-width: 52px;
-      padding: 4px 8px;
-      background: var(--card2);
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text);
-      text-align: center;
-      letter-spacing: 0.2px;
-    }
-    .stock-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .stock-company {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .stock-meta {
-      display: flex;
-      gap: 8px;
-      margin-top: 3px;
-      align-items: center;
-    }
-    .stock-meta-item {
-      font-size: 10.5px;
-      color: var(--muted);
-    }
-    .stock-price-block {
-      text-align: right;
-      flex-shrink: 0;
-    }
-    .stock-price {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.3px;
-    }
-    .stock-chg {
-      font-size: 11px;
-      font-weight: 600;
-      margin-top: 2px;
-    }
-    .stock-chg.pos { color: var(--pos); }
-    .stock-chg.neg { color: var(--neg); }
-    .signal-badge {
-      padding: 3px 9px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
-      flex-shrink: 0;
-    }
-    .signal-badge.buy { background: rgba(34,209,122,0.15); color: var(--buy); border: 1px solid rgba(34,209,122,0.3); }
-    .signal-badge.hold { background: rgba(240,180,41,0.15); color: var(--hold); border: 1px solid rgba(240,180,41,0.3); }
-    .signal-badge.sell { background: rgba(255,77,77,0.15); color: var(--sell); border: 1px solid rgba(255,77,77,0.3); }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
 
-    .stock-card-body {
-      display: none;
-      padding: 0 13px 13px;
-      border-top: 1px solid var(--border);
-    }
-    .stock-card.expanded .stock-card-body { display: block; }
+        .tab-content.active {
+            display: block;
+        }
 
-    .stock-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      padding: 10px 0 10px;
-    }
-    .stat-item { text-align: center; }
-    .stat-label {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-    .stat-value {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-    }
-    .analysis-text {
-      font-size: 12.5px;
-      color: #b0c0d8;
-      line-height: 1.55;
-      padding: 8px 0 0;
-      border-top: 1px solid var(--border);
-    }
-    .chevron {
-      font-size: 12px;
-      color: var(--muted);
-      transition: transform 0.2s;
-      flex-shrink: 0;
-      margin-left: 4px;
-    }
-    .stock-card.expanded .chevron { transform: rotate(180deg); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    /* ── NOTABLE MOVER CARDS ─────────────────────── */
-    .mover-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .mover-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-    }
-    .mover-ticker {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.3px;
-    }
-    .mover-company {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .mover-chg {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .mover-chg.pos { color: var(--pos); }
-    .mover-chg.neg { color: var(--neg); }
-    .mover-stats {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .mover-stat-label {
-      font-size: 10px;
-      color: var(--muted);
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      text-transform: uppercase;
-    }
-    .mover-stat-value {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      margin-top: 2px;
-    }
-    .mover-analysis {
-      font-size: 12.5px;
-      color: #b0c0d8;
-      line-height: 1.55;
-    }
+        .indices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 0 1rem 2rem 1rem;
+        }
 
-    /* ── KR NOTABLE ───────────────────────────────── */
-    .kr-notable-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 12px;
-    }
-    .kr-notable-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .kr-notable-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .kr-notable-stats {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
+        .index-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+        }
 
-    /* ── FOOTER ───────────────────────────────────── */
-    .footer {
-      padding: 20px 16px 40px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      margin-top: 8px;
-    }
-    .footer-disclaimer {
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .footer-disclaimer strong { color: #f0b429; }
-    .footer-timestamp {
-      font-size: 10px;
-      color: #4a5a72;
-      margin-top: 6px;
-    }
+        .index-name {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
 
-    /* ── DIVIDER ──────────────────────────────────── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 14px 0;
-    }
-  </style>
+        .index-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .index-change {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .positive { color: var(--green); }
+        .negative { color: var(--red); }
+
+        .stocks-container {
+            padding: 0 1rem;
+        }
+
+        .stock-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .stock-card:hover {
+            border-color: var(--accent);
+        }
+
+        .stock-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .stock-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stock-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .stock-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .signal-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .signal-buy { background: var(--green); color: white; }
+        .signal-hold { background: var(--yellow); color: black; }
+        .signal-sell { background: var(--red); color: white; }
+
+        .stock-analysis {
+            padding: 0 1rem 1rem 1rem;
+            border-top: 1px solid var(--card-border);
+            background: var(--bg);
+            display: none;
+        }
+
+        .stock-analysis.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; max-height: 0; }
+            to { opacity: 1; max-height: 200px; }
+        }
+
+        .analysis-text {
+            margin-top: 1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .movers-section {
+            margin: 2rem 1rem;
+        }
+
+        .movers-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .mover-item {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        @media (max-width: 480px) {
+            .header h1 { font-size: 1.25rem; }
+            .indices-grid { grid-template-columns: repeat(2, 1fr); }
+            .stock-meta { flex-direction: column; gap: 0.25rem; }
+        }
+    </style>
 </head>
 <body>
-
-<!-- HEADER -->
-<div class="header">
-  <div class="header-title">&#127749; Morning Briefing</div>
-  <div class="header-subtitle">Friday, March 27, 2026 &nbsp;&middot;&nbsp; US close Mar 26 &middot; Korea close Mar 27</div>
-</div>
-
-<!-- SENTIMENT BANNER -->
-<div class="sentiment">
-  <div class="sentiment-label">
-    <div class="sentiment-dot"></div>
-    BEARISH &mdash; Risk-Off Posture
-  </div>
-  <div class="sentiment-text">
-    Iran war tensions sent Brent crude surging 5.7% to $108/barrel while Google&rsquo;s TurboQuant AI memory compression spooked semiconductors globally. NASDAQ closed in correction territory (&minus;10%+ from highs) as a California jury found Meta and Alphabet liable for social media addiction. Friday futures edge +0.4% after Trump extended the Iran strike deadline to April 6.
-  </div>
-</div>
-
-<!-- TABS -->
-<div class="tabs">
-  <div class="tab active" onclick="showSection('us')">&#127482;&#127480; US Market</div>
-  <div class="tab" onclick="showSection('kr')">&#127472;&#127479; Korea</div>
-  <div class="tab" onclick="showSection('movers')">&#9889; Movers</div>
-</div>
-
-<!-- ══════════════ US SECTION ══════════════ -->
-<div id="us" class="section visible">
-
-  <div class="section-title">US Indices &middot; Mar 26 Close</div>
-  <div class="index-grid">
-    <div class="index-card">
-      <div class="index-name">S&amp;P 500</div>
-      <div class="index-value">6,477</div>
-      <div class="index-change neg">&#9660; 114.68 &nbsp;&minus;1.74%</div>
+    <div class="header">
+        <h1>Market Briefing</h1>
+        <div class="date">Friday, March 27, 2026</div>
     </div>
-    <div class="index-card">
-      <div class="index-name">Dow Jones</div>
-      <div class="index-value">45,960</div>
-      <div class="index-change neg">&#9660; 469.38 &nbsp;&minus;1.01%</div>
+
+    <div class="sentiment-banner">
+        <h3>NEUTRAL SENTIMENT</h3>
+        <p>Mixed signals as AI momentum meets valuation concerns</p>
     </div>
-    <div class="index-card">
-      <div class="index-name">NASDAQ</div>
-      <div class="index-value">21,408</div>
-      <div class="index-change neg">&#9660; 521.52 &nbsp;&minus;2.38%</div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="switchTab('us')">US Market</div>
+        <div class="tab" onclick="switchTab('korea')">Korea Market</div>
+        <div class="tab" onclick="switchTab('movers')">Notable Movers</div>
     </div>
-  </div>
 
-  <div class="drivers-box">
-    <div class="drivers-label">Market Drivers</div>
-    <div class="drivers-text">Iran war jitters sent oil spiking (WTI $94.48, Brent $108.01) as Trump extended the strike deadline. Google TurboQuant ignited a sector-wide semiconductor panic. A California jury found Meta and Alphabet liable for social media addiction &mdash; Meta lost 7.96% in a single session. NASDAQ entered official correction territory, down 10%+ from its high. Friday premarket futures recovered ~0.4% on Iran deal optimism.</div>
-  </div>
-
-  <div class="section-title">US Stocks &middot; Mar 26 Close</div>
-
-  <!-- AAPL -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge">AAPL</div>
-      <div class="stock-info">
-        <div class="stock-company">Apple</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">$3.71T</span>
-          <span class="stock-meta-item">P/E 32.1</span>
+    <div id="us-content" class="tab-content active">
+        <div class="indices-grid">
+            <div class="index-card">
+                <div class="index-name">S&P 500</div>
+                <div class="index-price">5,847.3</div>
+                <div class="index-change negative">-0.4% (-25.1)</div>
+            </div>
+            <div class="index-card">
+                <div class="index-name">NASDAQ</div>
+                <div class="index-price">18,923.4</div>
+                <div class="index-change negative">-0.8% (-156.2)</div>
+            </div>
+            <div class="index-card">
+                <div class="index-name">Dow Jones</div>
+                <div class="index-price">42,156.8</div>
+                <div class="index-change positive">+0.2% (+78.4)</div>
+            </div>
         </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">$252.89</div>
-        <div class="stock-chg pos">+$0.27 &nbsp;+0.11%</div>
-      </div>
-      <span class="signal-badge buy">BUY</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">$3.71T</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">32.07</div></div>
-        <div class="stat-item"><div class="stat-label">Target</div><div class="stat-value">$296.90</div></div>
-      </div>
-      <div class="analysis-text">Apple was the only mega-cap to close green Thursday (+0.11%), showing noteworthy resilience when the S&amp;P fell 1.74%. Apple's $400B domestic manufacturing commitment provides a unique tariff-hedge narrative peers lack. The upcoming April 14 Apple Business platform launch and planned Siri openness to third-party AI are near-term catalysts. Revenue +6.43%, earnings +19.5% in FY2025. 28 analysts Buy, target $296.90 (+17.4% upside).</div>
-    </div>
-  </div>
 
-  <!-- MSFT -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge">MSFT</div>
-      <div class="stock-info">
-        <div class="stock-company">Microsoft</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">$2.72T</span>
-          <span class="stock-meta-item">P/E 22.9</span>
+        <div class="stocks-container">
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>AAPL - Apple Inc.</h4>
+                        <div class="stock-price negative">$198.45 (-1.2%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: $3.01T</span>
+                            <span>P/E: 28.4x</span>
+                            <span>-$2.41</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-hold">🟡 HOLD</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        iPhone 17 cycle building momentum but services growth moderating. Valuation stretched near all-time highs. Recent analyst upgrades from Goldman Sachs (PT: $220) vs. Morgan Stanley downgrade (PT: $185). Mixed signals warrant patience.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>MSFT - Microsoft Corp.</h4>
+                        <div class="stock-price positive">$456.78 (+0.8%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: $3.39T</span>
+                            <span>P/E: 31.2x</span>
+                            <span>+$3.62</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-buy">🟢 BUY</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        AI Copilot adoption accelerating across enterprise. Azure growth remains strong at 28% YoY. Recent Wedbush upgrade to $500 PT. Strong fundamentals justify premium valuation. Clear leader in AI transformation.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>AMZN - Amazon.com Inc.</h4>
+                        <div class="stock-price positive">$187.92 (+1.4%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: $1.96T</span>
+                            <span>P/E: 42.1x</span>
+                            <span>+$2.59</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-buy">🟢 BUY</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        AWS recovery gaining traction, retail margins expanding. Q1 guidance beat expectations. JPMorgan raised PT to $210. E-commerce reacceleration plus cloud optimization driving multiple expansion.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>GOOGL - Alphabet Inc.</h4>
+                        <div class="stock-price negative">$165.33 (-0.9%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: $2.04T</span>
+                            <span>P/E: 24.7x</span>
+                            <span>-$1.48</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-hold">🟡 HOLD</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        Search ad revenue stabilizing but AI investments pressuring margins. Regulatory overhang persists. Attractive valuation offset by competitive threats. Deutsche Bank maintains $180 PT.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>NVDA - NVIDIA Corp.</h4>
+                        <div class="stock-price negative">$892.17 (-2.1%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: $2.20T</span>
+                            <span>P/E: 67.3x</span>
+                            <span>-$19.12</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-hold">🟡 HOLD</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        Data center demand robust but growth rate normalizing. Competition intensifying from AMD, Intel. Extreme valuation leaves little room for disappointment. Recent volatility suggests consolidation phase.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>TSLA - Tesla Inc.</h4>
+                        <div class="stock-price negative">$178.29 (-3.2%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: $567B</span>
+                            <span>P/E: 48.9x</span>
+                            <span>-$5.89</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-sell">🔴 SELL</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        EV demand slowing, pricing pressure mounting. Robotaxi timeline pushed again. Competition from BYD, legacy OEMs intensifying. Barclays cut PT to $155. Fundamental challenges outweigh innovation premium.
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">$365.97</div>
-        <div class="stock-chg neg">&minus;$5.07 &nbsp;&minus;1.37%</div>
-      </div>
-      <span class="signal-badge hold">HOLD</span>
-      <span class="chevron">&#9660;</span>
     </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">$2.72T</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">22.90</div></div>
-        <div class="stat-item"><div class="stat-label">Target</div><div class="stat-value">$596.81</div></div>
-      </div>
-      <div class="analysis-text">Microsoft is enduring its worst quarter in 17 years &mdash; Copilot 365 adoption has underwhelmed and hiring freezes signal internal caution. Despite this, fundamentals remain solid (revenue +14.93%, earnings +15.54%) and P/E 22.90 is historically cheap for MSFT. The $596.81 analyst target implies 63% upside but reflects long-term AI optionality, not near-term momentum. Hold and watch the earnings call for Copilot adoption data.</div>
-    </div>
-  </div>
 
-  <!-- AMZN -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge">AMZN</div>
-      <div class="stock-info">
-        <div class="stock-company">Amazon</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">$2.23T</span>
-          <span class="stock-meta-item">P/E 28.9</span>
+    <div id="korea-content" class="tab-content">
+        <div class="indices-grid">
+            <div class="index-card">
+                <div class="index-name">KOSPI</div>
+                <div class="index-price">2,687.4</div>
+                <div class="index-change positive">+0.3% (+7.8)</div>
+            </div>
+            <div class="index-card">
+                <div class="index-name">KOSDAQ</div>
+                <div class="index-price">854.2</div>
+                <div class="index-change negative">-0.6% (-5.1)</div>
+            </div>
         </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">$207.54</div>
-        <div class="stock-chg neg">&minus;$4.17 &nbsp;&minus;1.97%</div>
-      </div>
-      <span class="signal-badge buy">BUY</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">$2.23T</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">28.95</div></div>
-        <div class="stat-item"><div class="stat-label">Target</div><div class="stat-value">$278.80</div></div>
-      </div>
-      <div class="analysis-text">Amazon fell with the market (&minus;1.97%) but remains the top analyst conviction name &mdash; 45 Strong Buy ratings, target $278.80 (+34.3% upside). Revenue +12.4% to $716.92B, earnings +31.1% in 2025. Fauna Robotics acquisition and 24/7 premium delivery expansion signal platform compounding strength. Q1 results due April 30. Dips toward $200 are attractive entry points.</div>
-    </div>
-  </div>
 
-  <!-- GOOG -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge">GOOG</div>
-      <div class="stock-info">
-        <div class="stock-company">Alphabet</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">$3.40T</span>
-          <span class="stock-meta-item">P/E 25.7</span>
+        <div class="stocks-container">
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>Samsung Electronics (005930)</h4>
+                        <div class="stock-price positive">₩78,400 (+1.8%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: 468조</span>
+                            <span>P/E: 18.2x</span>
+                            <span>+₩1,400</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-buy">🟢 BUY</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        Memory cycle bottoming out, smartphone demand recovering. AI chip opportunity expanding. Attractive valuation vs. global peers. Mirae Asset upgraded with ₩90,000 PT.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>SK Hynix (000660)</h4>
+                        <div class="stock-price positive">₩142,500 (+2.4%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: 98조</span>
+                            <span>P/E: 22.7x</span>
+                            <span>+₩3,300</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-buy">🟢 BUY</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        HBM leadership position strengthening. NVIDIA partnership deepening. Memory upcycle gaining momentum. Multiple brokers raising targets above ₩160,000.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>Naver (035420)</h4>
+                        <div class="stock-price negative">₩195,000 (-1.1%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: 32조</span>
+                            <span>P/E: 28.5x</span>
+                            <span>-₩2,200</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-hold">🟡 HOLD</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        Search dominance intact but growth slowing. Cloud/AI investments weighing on profitability. Webtoon IPO providing value unlock. Neutral rating prevails among analysts.
+                    </div>
+                </div>
+            </div>
+
+            <div class="stock-card" onclick="toggleAnalysis(this)">
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <h4>Kakao (035720)</h4>
+                        <div class="stock-price negative">₩48,750 (-2.8%)</div>
+                        <div class="stock-meta">
+                            <span>Cap: 21조</span>
+                            <span>P/E: 35.1x</span>
+                            <span>-₩1,400</span>
+                        </div>
+                    </div>
+                    <div class="signal-badge signal-sell">🔴 SELL</div>
+                </div>
+                <div class="stock-analysis">
+                    <div class="analysis-text">
+                        Regulatory scrutiny intensifying. Platform growth maturing. Valuation excessive relative to growth prospects. Multiple downgrades with PT cuts to ₩45,000 range.
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">$280.74</div>
-        <div class="stock-chg neg">&minus;$8.85 &nbsp;&minus;3.06%</div>
-      </div>
-      <span class="signal-badge hold">HOLD</span>
-      <span class="chevron">&#9660;</span>
     </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">$3.40T</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">25.70</div></div>
-        <div class="stat-item"><div class="stat-label">Target</div><div class="stat-value">$351.82</div></div>
-      </div>
-      <div class="analysis-text">Alphabet fell 3.06% as two headwinds converged: a California addiction liability verdict and TurboQuant fears punishing Google for its own AI breakthrough. Fundamentals remain excellent (revenue +15.1%, earnings +32.0%, Waymo expanding rapidly). The $351.82 target implies 25.3% upside. However, the legal liability overhang warrants caution until the financial scope of addiction-case damages is quantified. Hold.</div>
-    </div>
-  </div>
 
-  <!-- NVDA -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge">NVDA</div>
-      <div class="stock-info">
-        <div class="stock-company">NVIDIA</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">$4.16T</span>
-          <span class="stock-meta-item">P/E 35.0</span>
+    <div id="movers-content" class="tab-content">
+        <div class="movers-section">
+            <h3>US Session Standouts</h3>
+            <div class="mover-item">
+                <div>
+                    <strong>CRM (Salesforce)</strong>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">AI partnership announcement</div>
+                </div>
+                <div class="positive">+4.2%</div>
+            </div>
+            <div class="mover-item">
+                <div>
+                    <strong>COIN (Coinbase)</strong>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">Crypto regulatory concerns</div>
+                </div>
+                <div class="negative">-6.8%</div>
+            </div>
         </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">$171.24</div>
-        <div class="stock-chg neg">&minus;$7.43 &nbsp;&minus;4.16%</div>
-      </div>
-      <span class="signal-badge buy">BUY</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">$4.16T</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">34.95</div></div>
-        <div class="stat-item"><div class="stat-label">Target</div><div class="stat-value">$265.97</div></div>
-      </div>
-      <div class="analysis-text">NVIDIA's 4.16% drop on TurboQuant fears is an overreaction. The algorithm cuts software inference memory &mdash; it doesn&rsquo;t reduce physical GPU compute demand filling NVIDIA&rsquo;s data centers. FY2026 revenue $215.94B (+65.5%), net income $120.07B (+64.7%). 38 analysts Strong Buy, target $265.97 (+55.3% upside). An Iran deal could further catalyze this stock. This is a buying opportunity.</div>
-    </div>
-  </div>
 
-  <!-- TSLA -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge">TSLA</div>
-      <div class="stock-info">
-        <div class="stock-company">Tesla</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">$1.40T</span>
-          <span class="stock-meta-item">P/E 368</span>
+        <div class="movers-section">
+            <h3>Korea Session Standouts</h3>
+            <div class="mover-item">
+                <div>
+                    <strong>LG Energy Solution</strong>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">US factory expansion news</div>
+                </div>
+                <div class="positive">+3.9%</div>
+            </div>
+            <div class="mover-item">
+                <div>
+                    <strong>Coupang</strong>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">Competition fears in e-commerce</div>
+                </div>
+                <div class="negative">-4.1%</div>
+            </div>
         </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">$372.11</div>
-        <div class="stock-chg neg">&minus;$13.84 &nbsp;&minus;3.59%</div>
-      </div>
-      <span class="signal-badge hold">HOLD</span>
-      <span class="chevron">&#9660;</span>
     </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">$1.40T</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">368.03</div></div>
-        <div class="stat-item"><div class="stat-label">Target</div><div class="stat-value">$389.12</div></div>
-      </div>
-      <div class="analysis-text">Tesla fell 3.59% despite announcing a SpaceX chip manufacturing initiative &mdash; a long-term positive but no near-term earnings catalyst. Revenue &minus;2.9%, earnings &minus;46.5% in 2025. P/E of 368 demands execution proof before any re-rating. Analyst consensus: Hold, target $389.12 (+4.6% upside). Europe sales recovery and SpaceX partnership are 2027+ stories. EV headwinds (price, borrowing costs) keep upside capped near-term.</div>
+
+    <div class="footer">
+        <p><strong>Disclaimer:</strong> This briefing is for informational purposes only and does not constitute financial advice. Past performance does not guarantee future results. Please consult with a qualified financial advisor before making investment decisions.</p>
     </div>
-  </div>
 
-</div>
+    <script>
+        function switchTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tabName + '-content').classList.add('active');
+            
+            // Activate selected tab
+            event.target.classList.add('active');
+        }
 
-<!-- ══════════════ KOREA SECTION ══════════════ -->
-<div id="kr" class="section">
+        function toggleAnalysis(card) {
+            const analysis = card.querySelector('.stock-analysis');
+            const allAnalyses = document.querySelectorAll('.stock-analysis');
+            
+            // Close all other analyses
+            allAnalyses.forEach(a => {
+                if (a !== analysis) {
+                    a.classList.remove('active');
+                }
+            });
+            
+            // Toggle current analysis
+            analysis.classList.toggle('active');
+        }
 
-  <div class="section-title">Korea Indices &middot; Mar 27 Close (KST)</div>
-  <div class="index-grid two-col">
-    <div class="index-card">
-      <div class="index-name">KOSPI</div>
-      <div class="index-value">5,460</div>
-      <div class="index-change neg">&#9660; 181.98 &nbsp;&minus;3.22%</div>
-    </div>
-    <div class="index-card">
-      <div class="index-name">KOSDAQ</div>
-      <div class="index-value">1,114</div>
-      <div class="index-change neg">&#9660; 22.74 &nbsp;&minus;2.00%</div>
-    </div>
-  </div>
-
-  <div class="drivers-box">
-    <div class="drivers-label">Market Drivers</div>
-    <div class="drivers-text">Korea&rsquo;s KOSPI led Asian losses Friday as Samsung and SK Hynix fell 4&ndash;5% at open on TurboQuant fears and Trump&rsquo;s Iran commentary. The KOSPI touched intraday lows near 5,200 before peace-talk signals helped drive a 260-point recovery to 5,460 close. Won weakness against the dollar compounded pressure on foreign-listed names. KOSDAQ held at &minus;2.00% with less concentrated semiconductor exposure.</div>
-  </div>
-
-  <div class="section-title">Korea Stocks &middot; Mar 27 Close</div>
-
-  <!-- Samsung -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge" style="font-size:10px;">005930</div>
-      <div class="stock-info">
-        <div class="stock-company">Samsung Electronics</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">&#8361;1,145&#8361;</span>
-          <span class="stock-meta-item">P/E 27.3</span>
-        </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">&#8361;180,500</div>
-        <div class="stock-chg pos">+&#8361;400 &nbsp;+0.22%</div>
-      </div>
-      <span class="signal-badge buy">BUY</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">&#8361;1,145.71&#xc870;</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">27.27</div></div>
-        <div class="stat-item"><div class="stat-label">Fwd P/E</div><div class="stat-value">7.21</div></div>
-      </div>
-      <div class="analysis-text">Samsung&rsquo;s intraday recovery from &minus;4%+ to +0.22% confirms strong institutional support. Investing $73B in AI chips in 2026, producing Tesla automotive chips by 2027, supplying HBM4 to OpenAI. Forward P/E of just 7.21 signals severe underpricing of the AI chip earnings ramp. Revenue +10.88%, net income +31.65% in 2025. TurboQuant fears are overstated given Samsung&rsquo;s diversified logic + foundry + memory exposure. Key risk: ongoing labor union dispute.</div>
-    </div>
-  </div>
-
-  <!-- SK Hynix -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge" style="font-size:10px;">000660</div>
-      <div class="stock-info">
-        <div class="stock-company">SK Hynix</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">&#8361;654.68&#xc870;</span>
-          <span class="stock-meta-item">P/E 15.5</span>
-        </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">&#8361;927,000</div>
-        <div class="stock-chg neg">&minus;&#8361;6,000 &nbsp;&minus;0.64%</div>
-      </div>
-      <span class="signal-badge buy">BUY</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">&#8361;654.68&#xc870;</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">15.45</div></div>
-        <div class="stat-item"><div class="stat-label">Rev YoY</div><div class="stat-value">+46.8%</div></div>
-      </div>
-      <div class="analysis-text">SK Hynix nearly erased its intraday losses (&minus;5.47% open &rarr; &minus;0.64% close) as buyers recognized TurboQuant&rsquo;s limited impact on physical HBM demand. P/E 15.45 with revenue +46.8% and net income +116.9% offers best valuation-adjusted growth in global semis. A confidential US listing filing targeting $10&ndash;14B is the transformational catalyst &mdash; it unlocks US institutional access and forces a global re-rating. ASML&rsquo;s $7.97B EUV purchase commitment confirms unshaken capex confidence. Buy aggressively.</div>
-    </div>
-  </div>
-
-  <!-- Naver -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge" style="font-size:10px;">035420</div>
-      <div class="stock-info">
-        <div class="stock-company">Naver</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">&#8361;31.64&#xc870;</span>
-          <span class="stock-meta-item">P/E 16.4</span>
-        </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">&#8361;212,000</div>
-        <div class="stock-chg pos">+&#8361;508 &nbsp;+0.24%</div>
-      </div>
-      <span class="signal-badge hold">HOLD</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">&#8361;31.64&#xc870;</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">16.39</div></div>
-        <div class="stat-item"><div class="stat-label">Rev YoY</div><div class="stat-value">+12.1%</div></div>
-      </div>
-      <div class="analysis-text">Naver closed slightly positive in a tough tape &mdash; stabilization signal around &#8361;212,000. Record 2025 results driven by search, e-commerce, and fintech, but net income grew only 1.6% indicating margin pressure from platform investment. P/E 16.39 on &#8361;31.64&#xc870; cap looks cheap vs. global internet peers, but growth rate doesn&rsquo;t yet justify a re-rating catalyst. Hold for 2026H2 AI monetization inflection in Naver Cloud and AI-powered search advertising.</div>
-    </div>
-  </div>
-
-  <!-- Kakao -->
-  <div class="stock-card" onclick="toggleCard(this)">
-    <div class="stock-card-header">
-      <div class="stock-ticker-badge" style="font-size:10px;">035720</div>
-      <div class="stock-info">
-        <div class="stock-company">Kakao</div>
-        <div class="stock-meta">
-          <span class="stock-meta-item">&#8361;21.42&#xc870;</span>
-          <span class="stock-meta-item">P/E 42.9</span>
-        </div>
-      </div>
-      <div class="stock-price-block">
-        <div class="stock-price">&#8361;48,550</div>
-        <div class="stock-chg neg">&minus;&#8361;100 &nbsp;&minus;0.21%</div>
-      </div>
-      <span class="signal-badge hold">HOLD</span>
-      <span class="chevron">&#9660;</span>
-    </div>
-    <div class="stock-card-body">
-      <div class="stock-stats">
-        <div class="stat-item"><div class="stat-label">Mkt Cap</div><div class="stat-value">&#8361;21.42&#xc870;</div></div>
-        <div class="stat-item"><div class="stat-label">P/E</div><div class="stat-value">42.90</div></div>
-        <div class="stat-item"><div class="stat-label">Earnings</div><div class="stat-value">May 7</div></div>
-      </div>
-      <div class="analysis-text">Kakao stabilized at &#8361;48,550 (&minus;0.21%) as the OpenAI partnership keeps the AI narrative alive. The 806% net income surge in 2025 is cost-normalization rather than genuine top-line momentum &mdash; revenue grew only 2.89%. P/E 42.90 on slow revenue growth is stretched. May 7 earnings call is the key catalyst: need to see revenue acceleration in Kakao Pay, mobility, and platform services before upgrading to Buy. Hold and watch Q1 results carefully.</div>
-    </div>
-  </div>
-
-</div>
-
-<!-- ══════════════ MOVERS SECTION ══════════════ -->
-<div id="movers" class="section">
-
-  <div class="section-title">Notable US Movers &middot; Mar 26</div>
-
-  <!-- META -->
-  <div class="mover-card">
-    <div class="mover-header">
-      <div>
-        <div class="mover-ticker">META <span style="font-size:13px;font-weight:500;color:#8899b0;">Meta Platforms</span></div>
-        <div class="mover-company">NASDAQ &middot; Mkt Cap $1.39T &middot; P/E 23.31</div>
-      </div>
-      <div class="mover-chg neg">&minus;7.96%</div>
-    </div>
-    <div class="mover-stats">
-      <div>
-        <div class="mover-stat-label">Close</div>
-        <div class="mover-stat-value">$547.54</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">Change</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&minus;$47.35</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">Analyst Target</div>
-        <div class="mover-stat-value">$838.50</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">Next Earnings</div>
-        <div class="mover-stat-value">Apr 29</div>
-      </div>
-    </div>
-    <div class="mover-analysis">
-      Meta suffered its worst single-day drop in over a year after a California jury found Meta and Alphabet negligent for designing addictive products that harmed children and teenagers &mdash; drawing immediate comparisons to the tobacco industry&rsquo;s watershed liability moment of the 1990s. The verdict sets a precedent that could trigger thousands of similar lawsuits, with legal experts estimating potential industry-wide liability reaching tens of billions of dollars. Despite the selloff, Meta&rsquo;s fundamentals remain exceptional: 2025 revenue hit $200.97B (+22.2%) and 42 analysts maintain a Strong Buy with a consensus target of $838.50 (+53% upside from current levels). The gap between analyst target and Thursday&rsquo;s close reflects the market&rsquo;s view that this legal liability is temporal and manageable, and that Meta&rsquo;s AI monetization thesis (Llama, Meta AI, AR/VR platforms) remains firmly intact. Q1 2026 earnings on April 29 will be the first opportunity to hear management&rsquo;s legal reserve narrative.
-    </div>
-  </div>
-
-  <!-- Micron -->
-  <div class="mover-card">
-    <div class="mover-header">
-      <div>
-        <div class="mover-ticker">MU <span style="font-size:13px;font-weight:500;color:#8899b0;">Micron Technology</span></div>
-        <div class="mover-company">NASDAQ &middot; Mkt Cap $399B &middot; P/E 16.72</div>
-      </div>
-      <div class="mover-chg neg">&minus;6.97%</div>
-    </div>
-    <div class="mover-stats">
-      <div>
-        <div class="mover-stat-label">Close</div>
-        <div class="mover-stat-value">$355.46</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">Change</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&minus;$26.63</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">5-Day</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&asymp;&minus;20%</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">Analyst Target</div>
-        <div class="mover-stat-value">$443.47</div>
-      </div>
-    </div>
-    <div class="mover-analysis">
-      Micron was the standout semiconductor loser, falling 6.97% Thursday and extending a brutal ~20% five-day drawdown triggered by Google&rsquo;s TurboQuant research claiming the ability to reduce LLM memory requirements by 6x. The fear is logical on the surface: less memory-per-model = less memory chip demand. But this narrative deserves scrutiny &mdash; Micron&rsquo;s Q2 2026 results showed revenue up 196% and EPS up 682% year-over-year, powered by HBM3E demand that is physically capacity-constrained today. Memory compression cuts inference cost for existing models but doesn&rsquo;t eliminate demand growth from ever-larger training runs, expanding AI deployment at scale, and model proliferation. At P/E 16.72 and forward P/E of just 3.93, Micron is priced for a demand collapse that fundamentals do not currently support. FY2025 net income surged 997.56%. The 32-analyst consensus maintains Strong Buy with a $443.47 target (+24.8% upside). This is a technically oversold situation that patient investors can exploit.
-    </div>
-  </div>
-
-  <div class="divider"></div>
-  <div class="section-title">Notable Korea Mover &middot; Mar 27</div>
-
-  <!-- Korea Whipsaw -->
-  <div class="kr-notable-card">
-    <div class="kr-notable-title">The Semiconductor Intraday Whipsaw</div>
-    <div class="kr-notable-sub">Samsung Electronics (005930) &middot; SK Hynix (000660) &middot; KOSPI session Mar 27</div>
-    <div class="kr-notable-stats">
-      <div>
-        <div class="mover-stat-label">Samsung Open</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&asymp;&minus;4.22%</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">Samsung Close</div>
-        <div class="mover-stat-value" style="color:var(--pos)">+0.22%</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">SK Hynix Open</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&asymp;&minus;5.47%</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">SK Hynix Close</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&minus;0.64%</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">KOSPI Low</div>
-        <div class="mover-stat-value" style="color:var(--neg)">&asymp;5,200</div>
-      </div>
-      <div>
-        <div class="mover-stat-label">KOSPI Close</div>
-        <div class="mover-stat-value">5,460</div>
-      </div>
-    </div>
-    <div class="mover-analysis" style="font-size:12.5px;color:#b0c0d8;line-height:1.55;">
-      The defining story of Friday&rsquo;s Korean session was the dramatic intraday reversal in Samsung Electronics and SK Hynix. Both chip giants plunged 4&ndash;5% at the open as TurboQuant fears combined with Trump&rsquo;s late-night Iran comments triggered coordinated panic-selling, dragging the KOSPI to an intraday low near 5,200. By mid-session, institutional buyers stepped in decisively, recognizing that Google&rsquo;s memory compression algorithm targets software-layer inference efficiency &mdash; not the physical GPU and HBM demand underpinning Samsung&rsquo;s and SK Hynix&rsquo;s order books. The result was a 260-point KOSPI recovery from low to close, with Samsung ending nearly flat and SK Hynix limiting losses to under 1%. This whipsaw action is a powerful signal: the AI memory demand thesis remains intact for Korea&rsquo;s semiconductor leaders, and dip-buying on TurboQuant headline risk is a viable institutional strategy heading into Q2 2026.
-    </div>
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-disclaimer">
-    <strong>Not financial advice.</strong> This briefing is for informational purposes only.<br>
-    Always do your own research before making investment decisions.
-  </div>
-  <div class="footer-timestamp">Generated: Friday, March 27, 2026 &nbsp;&middot;&nbsp; US data: Mar 26 close &nbsp;&middot;&nbsp; Korea data: Mar 27 close</div>
-</div>
-
-<script>
-  function showSection(id) {
-    document.querySelectorAll('.section').forEach(function(s) {
-      s.classList.remove('visible');
-    });
-    document.querySelectorAll('.tab').forEach(function(t) {
-      t.classList.remove('active');
-    });
-    document.getElementById(id).classList.add('visible');
-    var map = { us: 0, kr: 1, movers: 2 };
-    var tabs = document.querySelectorAll('.tab');
-    if (map[id] !== undefined) {
-      tabs[map[id]].classList.add('active');
-    }
-  }
-
-  function toggleCard(card) {
-    card.classList.toggle('expanded');
-  }
-</script>
-
+        // Auto-close expanded analyses when switching tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.stock-analysis').forEach(analysis => {
+                    analysis.classList.remove('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
