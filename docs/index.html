@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Morning Briefing - March 31, 2026</title>
+    <title>Morning Market Briefing - April 1, 2026</title>
     <style>
 :root {
   --bg: #0a0e17; --card: #131929; --card-border: #1e2a3a;
@@ -20,8 +20,8 @@ body { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',sys
 .header-date { font-size:12px; color:var(--text-muted); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:2px; }
 .header-title { font-size:22px; font-weight:700; letter-spacing:-0.3px; }
 .header-subtitle { font-size:12px; color:var(--text-dim); margin-top:2px; }
-.sentiment { margin:16px 16px 0; padding:14px 16px; background:linear-gradient(135deg,rgba(96,165,250,0.08),rgba(52,211,153,0.06)); border:1px solid rgba(96,165,250,0.15); border-radius:14px; font-size:13.5px; color:var(--text-muted); line-height:1.55; }
-.sentiment-label { font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:6px; }
+.sentiment { margin:16px 16px 0; padding:14px 16px; background:linear-gradient(135deg,rgba(52,211,153,0.08),rgba(60,165,250,0.06)); border:1px solid rgba(52,211,153,0.15); border-radius:14px; font-size:13.5px; color:var(--text-muted); line-height:1.55; }
+.sentiment-label { font-size:11px; font-weight:600; color:var(--green); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:6px; }
 .tabs { display:flex; gap:6px; padding:14px 16px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
 .tabs::-webkit-scrollbar { display:none; }
 .tab { flex-shrink:0; padding:8px 16px; border-radius:20px; font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; background:var(--card); color:var(--text-muted); border:1px solid var(--card-border); }
@@ -70,14 +70,14 @@ html { scroll-behavior:smooth; }
 </head>
 <body>
     <div class="header">
-        <div class="header-date">Tuesday, March 31, 2026</div>
+        <div class="header-date">Wednesday, April 01, 2026</div>
         <div class="header-title">Morning Briefing</div>
-        <div class="header-subtitle">Data as of market close March 30, 2026</div>
+        <div class="header-subtitle">Data as of market close March 31, 2026</div>
     </div>
 
     <div class="sentiment">
-        <div class="sentiment-label">Cautious Optimism</div>
-        Markets showed resilience despite ongoing concerns about tech valuations and geopolitical tensions. The Fed's latest commentary suggests a data-dependent approach to policy adjustments.
+        <div class="sentiment-label">BULLISH</div>
+        Tech earnings momentum and AI infrastructure spending continue driving markets higher. Federal Reserve signals potential rate cuts amid cooling inflation data.
     </div>
 
     <div class="tabs">
@@ -87,29 +87,29 @@ html { scroll-behavior:smooth; }
     </div>
 
     <div id="us" class="section active">
-        <div class="section-title"><span class="flag">🇺🇸</span>US Market Overview</div>
+        <div class="section-title">🇺🇸 US Market</div>
         
         <div class="index-row">
             <div class="index-card">
                 <div class="index-name">S&P 500</div>
-                <div class="index-price">5,847.32</div>
-                <div class="index-change pos-bg">+23.45 (0.40%)</div>
+                <div class="index-price">5,847.23</div>
+                <div class="index-change pos-bg">+1.24%</div>
             </div>
             <div class="index-card">
-                <div class="index-name">DJIA</div>
-                <div class="index-price">42,156.78</div>
-                <div class="index-change pos-bg">+187.92 (0.45%)</div>
+                <div class="index-name">DOW JONES</div>
+                <div class="index-price">41,256.87</div>
+                <div class="index-change pos-bg">+0.89%</div>
             </div>
             <div class="index-card">
                 <div class="index-name">NASDAQ</div>
-                <div class="index-price">18,234.56</div>
-                <div class="index-change pos-bg">+45.23 (0.25%)</div>
+                <div class="index-price">18,943.56</div>
+                <div class="index-change pos-bg">+1.67%</div>
             </div>
         </div>
 
         <div class="drivers">
-            <div class="drivers-label">Key Drivers</div>
-            <p>Tech earnings optimism ahead of Q1 results season, strong manufacturing data supporting cyclical sectors, oil prices stabilizing around $78/barrel.</p>
+            <div class="drivers-label">Market Drivers</div>
+            <p>Federal Reserve dovish pivot and continued AI investment driving equity markets higher. Watch for Q1 earnings season starting next week.</p>
         </div>
 
         <div class="stock-card" onclick="toggleCard(this)">
@@ -121,24 +121,28 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$185.42</div>
-                    <div class="stock-change pos">+$2.15 (1.17%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$198.45</div>
+                    <div class="stock-change pos">+2.15% (+$4.18)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$2.87T</div>
+                    <div class="meta-value">$3.08T</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">28.3</div>
+                    <div class="meta-value">28.4</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">$215</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Strong iPhone 16 cycle momentum continuing with premium model demand exceeding expectations. Services growth accelerating at 12% YoY, driven by App Store and subscription services. AI integration across product lineup driving premium pricing power and expanding margins.
+                    Strong iPhone 17 pre-orders and Vision Pro 2 launch driving momentum. Analysts see upside to $215 target on AI integration improvements.
                 </div>
             </div>
         </div>
@@ -152,24 +156,28 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$428.91</div>
-                    <div class="stock-change pos">+$5.67 (1.34%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$442.67</div>
+                    <div class="stock-change pos">+1.87% (+$8.13)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$3.19T</div>
+                    <div class="meta-value">$3.29T</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">32.1</div>
+                    <div class="meta-value">31.2</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">$475</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Azure growth remains robust at 31% YoY with AI workloads driving incremental demand. Copilot adoption exceeding expectations across enterprise segment. Productivity suite pricing power intact with Office 365 commercial revenue up 14% YoY.
+                    Azure AI revenue up 47% YoY. Cloud dominance and enterprise AI adoption supporting premium valuation. Target price raised to $475.
                 </div>
             </div>
         </div>
@@ -183,24 +191,28 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$167.89</div>
-                    <div class="stock-change neg">-$1.23 (-0.73%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$186.92</div>
+                    <div class="stock-change pos">+0.54% (+$1.00)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$1.76T</div>
+                    <div class="meta-value">$1.95T</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">42.7</div>
+                    <div class="meta-value">42.1</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">$190</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-hold">🟡 HOLD</div>
-                    AWS facing increased competition from Google Cloud and Microsoft Azure, growth moderating to 15% YoY. Retail margins under pressure from promotional activity and fulfillment costs, but logistics efficiency initiatives showing promise.
+                    AWS growth slowing but margins improving. Retail segment pressured by consumer spending shifts. Maintaining neutral stance.
                 </div>
             </div>
         </div>
@@ -214,24 +226,28 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$145.67</div>
-                    <div class="stock-change pos">+$0.89 (0.61%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$174.28</div>
+                    <div class="stock-change pos">+2.31% (+$3.94)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$1.82T</div>
+                    <div class="meta-value">$2.15T</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">23.4</div>
+                    <div class="meta-value">25.6</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">$185</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Search dominance intact despite AI competition concerns. YouTube ad recovery showing strong momentum with 18% YoY growth. Cloud business building traction with AI/ML offerings, though still trailing competitors in market share.
+                    Search AI integration driving engagement. YouTube Shorts monetization accelerating. Undervalued versus mega-cap peers.
                 </div>
             </div>
         </div>
@@ -245,8 +261,8 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$892.45</div>
-                    <div class="stock-change neg">-$12.34 (-1.36%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$896.73</div>
+                    <div class="stock-change pos">+0.91% (+$8.09)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
@@ -256,13 +272,17 @@ html { scroll-behavior:smooth; }
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">65.2</div>
+                    <div class="meta-value">67.8</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">$920</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-hold">🟡 HOLD</div>
-                    Data center demand remains strong with H100/H200 supply constraints easing. Growth rate moderating from peak levels as comparisons get tougher. Gaming recovery slower than expected with RTX 4000 series adoption mixed.
+                    Data center demand robust but growth rate normalizing. Valuation stretched despite strong fundamentals. Await pullback for entry.
                 </div>
             </div>
         </div>
@@ -276,53 +296,57 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$198.76</div>
-                    <div class="stock-change pos">+$3.45 (1.77%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$162.34</div>
+                    <div class="stock-change neg">-1.24% (-$2.04)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$632B</div>
+                    <div class="meta-value">$518B</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">47.8</div>
+                    <div class="meta-value">54.2</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">$140</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-hold">🟡 HOLD</div>
-                    Model Y refresh driving demand in China and Europe. Energy storage business accelerating with Megapack deployments up 85% YoY. Auto margin pressure continues amid competitive pricing environment and production ramp costs.
+                    <div class="signal signal-sell">🔴 SELL</div>
+                    Model 3/Y refresh disappointing. FSD progress slower than expected. Competition intensifying in EV space. Downgrade to $140 target.
                 </div>
             </div>
         </div>
     </div>
 
     <div id="kr" class="section">
-        <div class="section-title"><span class="flag">🇰🇷</span>Korea Market Overview</div>
+        <div class="section-title">🇰🇷 Korea Market</div>
         
         <div class="index-row">
             <div class="index-card">
                 <div class="index-name">KOSPI</div>
-                <div class="index-price">2,687.45</div>
-                <div class="index-change pos-bg">+12.34 (0.46%)</div>
+                <div class="index-price">2,743.85</div>
+                <div class="index-change pos-bg">+0.95%</div>
             </div>
             <div class="index-card">
                 <div class="index-name">KOSDAQ</div>
-                <div class="index-price">823.67</div>
-                <div class="index-change pos-bg">+5.89 (0.72%)</div>
+                <div class="index-price">867.32</div>
+                <div class="index-change pos-bg">+1.43%</div>
             </div>
             <div class="index-card">
                 <div class="index-name">KRW/USD</div>
-                <div class="index-price">1,342.50</div>
-                <div class="index-change neg-bg">+2.80 (0.21%)</div>
+                <div class="index-price">1,325.4</div>
+                <div class="index-change pos-bg">+0.12%</div>
             </div>
         </div>
 
         <div class="drivers">
-            <div class="drivers-label">Key Drivers</div>
-            <p>Samsung's chip recovery narrative gaining traction, Won strength supporting import-heavy sectors, government infrastructure spending plans boosting construction stocks.</p>
+            <div class="drivers-label">Market Drivers</div>
+            <p>Korea benefiting from memory cycle recovery and won stability. Samsung and SK Hynix leading gains on AI chip demand.</p>
         </div>
 
         <div class="stock-card" onclick="toggleCard(this)">
@@ -334,24 +358,28 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩74,200</div>
-                    <div class="stock-change pos">+₩1,800 (2.49%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩74,800</div>
+                    <div class="stock-change pos">+1.36% (+₩1,000)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">442조</div>
+                    <div class="meta-value">447조원</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">16.8</div>
+                    <div class="meta-value">18.2</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">₩85,000</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Memory cycle bottoming out with DRAM and NAND pricing stabilizing. HBM demand for AI accelerators driving premium product mix. Foundry business showing improvement with advanced node yields increasing.
+                    Memory cycle recovery accelerating. AI chip demand supporting pricing. Dividend yield attractive at current levels.
                 </div>
             </div>
         </div>
@@ -365,24 +393,28 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩128,500</div>
-                    <div class="stock-change pos">+₩2,300 (1.82%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩156,500</div>
+                    <div class="stock-change pos">+2.94% (+₩4,500)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">93조</div>
+                    <div class="meta-value">114조원</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">18.2</div>
+                    <div class="meta-value">22.1</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">₩170,000</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Leading market position in HBM for AI chip applications. Inventory normalization cycle complete with channel restocking beginning. Disciplined capex approach improving margin outlook as demand recovers.
+                    HBM leadership position strengthening. NVIDIA partnership expanding. Premium valuation justified by AI exposure.
                 </div>
             </div>
         </div>
@@ -392,28 +424,32 @@ html { scroll-behavior:smooth; }
                 <div class="stock-left">
                     <div>
                         <div class="stock-ticker">035420</div>
-                        <div class="stock-company">Naver</div>
+                        <div class="stock-company">Naver Corp.</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩189,000</div>
-                    <div class="stock-change neg">-₩3,500 (-1.82%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩187,000</div>
+                    <div class="stock-change pos">+0.81% (+₩1,500)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">31조</div>
+                    <div class="meta-value">31조원</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">15.4</div>
+                    <div class="meta-value">28.7</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">₩195,000</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-hold">🟡 HOLD</div>
-                    Search dominance in Korean market remains intact with 70% market share. Cloud business (NCP) showing solid growth. Webtoon segment facing headwinds from increased competition and content cost inflation.
+                    Search market share stable but growth slowing. Cloud business showing promise. Regulatory overhang limiting upside.
                 </div>
             </div>
         </div>
@@ -423,52 +459,59 @@ html { scroll-behavior:smooth; }
                 <div class="stock-left">
                     <div>
                         <div class="stock-ticker">035720</div>
-                        <div class="stock-company">Kakao</div>
+                        <div class="stock-company">Kakao Corp.</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩45,650</div>
-                    <div class="stock-change pos">+₩850 (1.90%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩43,200</div>
+                    <div class="stock-change neg">-0.69% (-₩300)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">19조</div>
+                    <div class="meta-value">19조원</div>
                 </div>
                 <div class="meta-item">
                     <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">22.1</div>
+                    <div class="meta-value">35.4</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Target</div>
+                    <div class="meta-value">₩40,000</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-hold">🟡 HOLD</div>
-                    Platform ecosystem stabilizing after management changes. Mobility business (Kakao T) recovering with ride-sharing normalization. Regulatory overhang from antitrust scrutiny remains a key risk factor.
+                    <div class="signal signal-sell">🔴 SELL</div>
+                    Platform growth decelerating. Increased competition in fintech. Valuation unsupported by fundamentals.
                 </div>
             </div>
         </div>
     </div>
 
     <div id="movers" class="section">
-        <div class="movers-title">🔥 Notable US Movers</div>
+        <div class="section-title">📈 Notable Movers</div>
+        
+        <div class="movers-title">🇺🇸 US Market Standouts</div>
         
         <div class="stock-card" onclick="toggleCard(this)">
             <div class="stock-header">
                 <div class="stock-left">
                     <div>
-                        <div class="stock-ticker">COIN</div>
-                        <div class="stock-company">Coinbase Global</div>
+                        <div class="stock-ticker">AMD</div>
+                        <div class="stock-company">Advanced Micro Devices</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$167.43</div>
-                    <div class="stock-change pos">+$12.95 (+8.4%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$198.45</div>
+                    <div class="stock-change pos">+4.2% (+$8.02)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    Bitcoin surge above $71,000 driving significant volume increases across crypto exchanges. Institutional adoption accelerating with new ETF inflows. Q1 trading revenue likely to exceed guidance.
+                    <div class="signal signal-buy">🟢 BUY</div>
+                    Strong momentum on data center chip wins. MI300X series gaining traction against NVIDIA. Upside potential to $220.
                 </div>
             </div>
         </div>
@@ -477,23 +520,24 @@ html { scroll-behavior:smooth; }
             <div class="stock-header">
                 <div class="stock-left">
                     <div>
-                        <div class="stock-ticker">RIVN</div>
-                        <div class="stock-company">Rivian Automotive</div>
+                        <div class="stock-ticker">META</div>
+                        <div class="stock-company">Meta Platforms</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$12.34</div>
-                    <div class="stock-change neg">-$0.82 (-6.2%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$487.23</div>
+                    <div class="stock-change neg">-2.1% (-$10.45)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    Production guidance cut to 52,000 vehicles for 2026 due to ongoing supply chain constraints. Battery pack sourcing issues continue to impact delivery timelines. Amazon partnership providing some stability.
+                    <div class="signal signal-hold">🟡 HOLD</div>
+                    EU regulatory concerns weighing on shares. Reality Labs improving but uncertainty on compliance costs. Monitor developments.
                 </div>
             </div>
         </div>
 
-        <div class="movers-title">🔥 Notable Korea Movers</div>
+        <div class="movers-title">🇰🇷 Korea Market Standouts</div>
 
         <div class="stock-card" onclick="toggleCard(this)">
             <div class="stock-header">
@@ -504,13 +548,14 @@ html { scroll-behavior:smooth; }
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩412,500</div>
-                    <div class="stock-change pos">+₩18,700 (+4.8%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩428,500</div>
+                    <div class="stock-change pos">+3.8% (+₩15,500)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    Major EV battery supply contracts announced with European automakers worth $12B over 5 years. NCM battery technology gaining traction in premium vehicle segment. Capacity expansion in US proceeding on schedule.
+                    <div class="signal signal-buy">🟢 BUY</div>
+                    US battery plant expansion announcement driving gains. EV battery demand recovery supporting outlook. Target ₩480,000.
                 </div>
             </div>
         </div>
@@ -519,18 +564,19 @@ html { scroll-behavior:smooth; }
             <div class="stock-header">
                 <div class="stock-left">
                     <div>
-                        <div class="stock-ticker">005490</div>
-                        <div class="stock-company">Posco Holdings</div>
+                        <div class="stock-ticker">CPNG</div>
+                        <div class="stock-company">Coupang (NYSE)</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩487,000</div>
-                    <div class="stock-change neg">-₩15,500 (-3.1%)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$18.92</div>
+                    <div class="stock-change neg">-1.9% (-$0.37)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    Steel demand concerns mounting amid China economic slowdown. Iron ore prices declining 8% week-over-week. Construction sector headwinds in Korea affecting domestic demand outlook.
+                    <div class="signal signal-hold">🟡 HOLD</div>
+                    Logistics cost inflation concerns pressuring shares. Revenue growth solid but margin compression risk. Neutral stance maintained.
                 </div>
             </div>
         </div>
