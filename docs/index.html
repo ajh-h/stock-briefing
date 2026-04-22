@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Morning Stock Briefing - April 21, 2026</title>
+    <title>Morning Stock Briefing - April 22, 2026</title>
     <style>
         :root {
-          --bg: #0a0e17; --card: #131929; --card-border: #1e2a3a;
-          --text: #e2e8f0; --text-muted: #8892a4; --text-dim: #5a6578;
-          --accent: #60a5fa; --green: #34d399; --green-bg: rgba(52,211,153,0.12);
-          --red: #f87171; --red-bg: rgba(248,113,113,0.12);
-          --yellow: #fbbf24; --yellow-bg: rgba(251,191,36,0.12); --divider: #1a2332;
+            --bg: #0a0e17; --card: #131929; --card-border: #1e2a3a;
+            --text: #e2e8f0; --text-muted: #8892a4; --text-dim: #5a6578;
+            --accent: #60a5fa; --green: #34d399; --green-bg: rgba(52,211,153,0.12);
+            --red: #f87171; --red-bg: rgba(248,113,113,0.12);
+            --yellow: #fbbf24; --yellow-bg: rgba(251,191,36,0.12); --divider: #1a2332;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.5; -webkit-font-smoothing:antialiased; padding-bottom:env(safe-area-inset-bottom,20px); }
@@ -20,7 +20,7 @@
         .header-date { font-size:12px; color:var(--text-muted); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:2px; }
         .header-title { font-size:22px; font-weight:700; letter-spacing:-0.3px; }
         .header-subtitle { font-size:12px; color:var(--text-dim); margin-top:2px; }
-        .sentiment { margin:16px 16px 0; padding:14px 16px; background:linear-gradient(135deg,rgba(96,165,250,0.08),rgba(96,165,250,0.06)); border:1px solid rgba(96,165,250,0.15); border-radius:14px; font-size:13.5px; color:var(--text-muted); line-height:1.55; }
+        .sentiment { margin:16px 16px 0; padding:14px 16px; background:linear-gradient(135deg,rgba(248,113,113,0.08),rgba(251,191,36,0.06)); border:1px solid rgba(248,113,113,0.15); border-radius:14px; font-size:13.5px; color:var(--text-muted); line-height:1.55; }
         .sentiment-label { font-size:11px; font-weight:600; color:var(--accent); letter-spacing:0.8px; text-transform:uppercase; margin-bottom:6px; }
         .tabs { display:flex; gap:6px; padding:14px 16px 0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
         .tabs::-webkit-scrollbar { display:none; }
@@ -70,14 +70,14 @@
 </head>
 <body>
     <div class="header">
-        <div class="header-date">Tuesday, April 21, 2026</div>
+        <div class="header-date">Wednesday, April 22, 2026</div>
         <div class="header-title">Morning Briefing</div>
-        <div class="header-subtitle">Data as of market close April 20, 2026</div>
+        <div class="header-subtitle">Data as of market close April 21, 2026</div>
     </div>
 
     <div class="sentiment">
         <div class="sentiment-label">NEUTRAL</div>
-        Mixed signals as markets digest Q1 earnings results and await Fed policy decisions. Tech sector showing resilience while traditional sectors face headwinds from elevated rates.
+        Mixed signals dominate as tech earnings season approaches with investors balancing AI growth prospects against rising interest rate concerns. Federal Reserve policy decisions and quarterly earnings from mega-cap tech stocks are key catalysts this week.
     </div>
 
     <div class="tabs">
@@ -87,28 +87,29 @@
     </div>
 
     <div id="us" class="section active">
-        <div class="section-title">🇺🇸 US Market Overview</div>
+        <h2 class="section-title"><span class="flag">🇺🇸</span> US Market</h2>
+        
         <div class="index-row">
             <div class="index-card">
                 <div class="index-name">S&P 500</div>
-                <div class="index-price">5,234.67</div>
-                <div class="index-change neg-bg">-0.42%</div>
+                <div class="index-price">5,247.31</div>
+                <div class="index-change neg-bg">-15.22 (-0.29%)</div>
             </div>
             <div class="index-card">
-                <div class="index-name">DOW JONES</div>
-                <div class="index-price">39,847.23</div>
-                <div class="index-change pos-bg">+0.18%</div>
+                <div class="index-name">DJIA</div>
+                <div class="index-price">38,452.19</div>
+                <div class="index-change pos-bg">+127.48 (+0.33%)</div>
             </div>
             <div class="index-card">
                 <div class="index-name">NASDAQ</div>
-                <div class="index-price">16,789.34</div>
-                <div class="index-change neg-bg">-0.73%</div>
+                <div class="index-price">16,381.83</div>
+                <div class="index-change neg-bg">-42.77 (-0.26%)</div>
             </div>
         </div>
 
         <div class="drivers">
-            <div class="drivers-label">Market Drivers</div>
-            <p>Mixed earnings results from major tech companies. Fed policy uncertainty ahead of Wednesday's meeting minutes. Rising bond yields pressuring growth stocks.</p>
+            <div class="drivers-label">Key Drivers</div>
+            <p>Treasury yields edged higher ahead of Fed communications, while tech stocks faced profit-taking before earnings season. Energy and financials led gains on stronger oil prices and banking optimism.</p>
         </div>
 
         <div class="stock-card" onclick="toggleCard(this)">
@@ -116,32 +117,28 @@
                 <div class="stock-left">
                     <div>
                         <div class="stock-ticker">AAPL</div>
-                        <div class="stock-company">Apple Inc.</div>
+                        <div class="stock-company">Apple Inc</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$187.43</div>
-                    <div class="stock-change neg">-1.24% (-$2.35)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$189.45</div>
+                    <div class="stock-change neg">-$2.31 (-1.20%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$2.85T</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">$2.94T</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">28.7</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">$205</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">28.4</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-hold">🟡 HOLD</div>
-                    Strong iPhone 16 sales offset by Services revenue concerns. Analyst consensus remains bullish with average target of $205. Wait for better entry point below $180.
+                    iPhone 18 launch anticipation offset by China market concerns. Services revenue growth remains strong. Analyst consensus: 15 BUY, 8 HOLD, 2 SELL. Average target: $205.
                 </div>
             </div>
         </div>
@@ -155,28 +152,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$428.91</div>
-                    <div class="stock-change pos">+0.87% (+$3.69)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$421.78</div>
+                    <div class="stock-change pos">+$3.22 (+0.77%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$3.21T</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">$3.13T</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">32.4</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">$465</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">31.2</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Azure growth acceleration and AI integration driving momentum. Recent Copilot adoption metrics exceed expectations. Strong fundamentals support current valuation.
+                    Azure cloud growth accelerating with AI integration. Office 365 Copilot adoption exceeding expectations. Strong enterprise demand. Analyst consensus: 18 BUY, 4 HOLD, 0 SELL. Average target: $465.
                 </div>
             </div>
         </div>
@@ -190,28 +183,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$178.56</div>
-                    <div class="stock-change pos">+1.45% (+$2.55)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$178.92</div>
+                    <div class="stock-change neg">-$1.44 (-0.80%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
+                    <div class="meta-label">MCap</div>
                     <div class="meta-value">$1.87T</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">45.2</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">$195</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">42.1</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-buy">🟢 BUY</div>
-                    AWS revenue beat and improved retail margins highlight operational efficiency. Prime membership growth remains robust. Multiple expansion justified.
+                    <div class="signal signal-hold">🟡 HOLD</div>
+                    AWS margins improving but retail segment facing pressure from consumer spending slowdown. Prime membership growth slowing. Analyst consensus: 12 BUY, 10 HOLD, 1 SELL. Average target: $190.
                 </div>
             </div>
         </div>
@@ -225,28 +214,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$156.78</div>
-                    <div class="stock-change neg">-0.67% (-$1.06)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$169.33</div>
+                    <div class="stock-change pos">+$2.11 (+1.26%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$1.98T</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">$2.09T</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">24.6</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">$170</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">24.7</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-hold">🟡 HOLD</div>
-                    Search revenue stabilizing but YouTube growth slowing. AI investments yet to show significant returns. Attractive valuation but limited near-term catalysts.
+                    <div class="signal signal-buy">🟢 BUY</div>
+                    Search revenue stabilizing, YouTube growth strong. AI investments showing early returns. Cloud business gaining enterprise traction. Analyst consensus: 16 BUY, 6 HOLD, 1 SELL. Average target: $185.
                 </div>
             </div>
         </div>
@@ -260,28 +245,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$891.23</div>
-                    <div class="stock-change pos">+2.34% (+$20.34)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$912.34</div>
+                    <div class="stock-change neg">-$18.77 (-2.02%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$2.19T</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">$2.25T</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">42.8</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">$950</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">47.8</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-buy">🟢 BUY</div>
-                    Data center demand remains insatiable. New Blackwell architecture launch exceeding expectations. Leadership in AI infrastructure solidifying.
+                    <div class="signal signal-hold">🟡 HOLD</div>
+                    Data center demand remains robust but growth rate moderating. Competition intensifying in AI chips. Valuation stretched despite strong fundamentals. Analyst consensus: 14 BUY, 8 HOLD, 1 SELL. Average target: $950.
                 </div>
             </div>
         </div>
@@ -295,56 +276,48 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$142.67</div>
-                    <div class="stock-change neg">-2.18% (-$3.18)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$198.67</div>
+                    <div class="stock-change neg">-$4.23 (-2.09%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">$451B</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">$632B</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">48.9</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">$120</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">51.2</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-sell">🔴 SELL</div>
-                    Delivery numbers disappointing amid increased EV competition. Autonomous driving timeline repeatedly delayed. Valuation unsupported by fundamentals.
+                    EV sales growth slowing globally. Autonomous driving progress disappointing. Competition intensifying from traditional automakers. Analyst consensus: 5 BUY, 12 HOLD, 6 SELL. Average target: $175.
                 </div>
             </div>
         </div>
     </div>
 
     <div id="kr" class="section">
-        <div class="section-title">🇰🇷 Korea Market Overview</div>
+        <h2 class="section-title"><span class="flag">🇰🇷</span> Korea Market</h2>
+        
         <div class="index-row">
             <div class="index-card">
                 <div class="index-name">KOSPI</div>
-                <div class="index-price">2,687.45</div>
-                <div class="index-change neg-bg">-0.29%</div>
+                <div class="index-price">2,721.45</div>
+                <div class="index-change pos-bg">+12.87 (+0.48%)</div>
             </div>
             <div class="index-card">
                 <div class="index-name">KOSDAQ</div>
-                <div class="index-price">845.67</div>
-                <div class="index-change pos-bg">+0.51%</div>
-            </div>
-            <div class="index-card">
-                <div class="index-name">KRW/USD</div>
-                <div class="index-price">1,345.2</div>
-                <div class="index-change pos-bg">+0.12%</div>
+                <div class="index-price">851.33</div>
+                <div class="index-change neg-bg">-3.21 (-0.38%)</div>
             </div>
         </div>
 
         <div class="drivers">
-            <div class="drivers-label">Market Drivers</div>
-            <p>Memory chip sector recovery signs boosting Samsung and SK Hynix. Won strengthening on improved trade balance. Inflation concerns ahead of Friday's data release.</p>
+            <div class="drivers-label">Key Drivers</div>
+            <p>Samsung's strong semiconductor outlook boosted large-caps, while smaller tech names faced pressure from global growth concerns.</p>
         </div>
 
         <div class="stock-card" onclick="toggleCard(this)">
@@ -356,28 +329,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩78,900</div>
-                    <div class="stock-change pos">+1.67% (+₩1,300)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩78,200</div>
+                    <div class="stock-change pos">+₩1,400 (+1.82%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">472조</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">467조</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">18.4</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">₩85,000</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">18.3</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Memory chip cycle showing signs of recovery. AI server demand boosting HBM sales. Foundry business gaining share from TSMC.
+                    Memory chip cycle bottoming out. AI server demand driving DRAM/NAND recovery. Foundry business gaining market share from TSMC.
                 </div>
             </div>
         </div>
@@ -391,28 +360,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩145,500</div>
-                    <div class="stock-change pos">+2.89% (+₩4,100)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩156,500</div>
+                    <div class="stock-change pos">+₩3,200 (+2.09%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
-                    <div class="meta-value">106조</div>
+                    <div class="meta-label">MCap</div>
+                    <div class="meta-value">114조</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
+                    <div class="meta-label">P/E</div>
                     <div class="meta-value">22.1</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">₩160,000</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Leading HBM3E technology critical for AI applications. Strong partnerships with NVIDIA and other AI chip makers. Margin expansion expected.
+                    Leading HBM memory supplier for AI accelerators. Strong pricing power in specialty memory markets. Capacity expansion plans well-timed.
                 </div>
             </div>
         </div>
@@ -422,32 +387,28 @@
                 <div class="stock-left">
                     <div>
                         <div class="stock-ticker">035420</div>
-                        <div class="stock-company">Naver</div>
+                        <div class="stock-company">Naver Corp</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩189,000</div>
-                    <div class="stock-change neg">-0.53% (-₩1,000)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩187,000</div>
+                    <div class="stock-change neg">-₩2,500 (-1.32%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
+                    <div class="meta-label">MCap</div>
                     <div class="meta-value">31조</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">26.7</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">₩200,000</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">26.8</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-hold">🟡 HOLD</div>
-                    Line merger integration challenges persist. Search dominance in Korea intact but growth limited. Cloud and fintech showing promise.
+                    Search dominance intact but growth slowing. Cloud and fintech initiatives showing promise. Webtoon business facing headwinds.
                 </div>
             </div>
         </div>
@@ -457,71 +418,65 @@
                 <div class="stock-left">
                     <div>
                         <div class="stock-ticker">035720</div>
-                        <div class="stock-company">Kakao</div>
+                        <div class="stock-company">Kakao Corp</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩45,600</div>
-                    <div class="stock-change neg">-1.51% (-₩700)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩45,300</div>
+                    <div class="stock-change neg">-₩1,200 (-2.58%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
-                    <div class="meta-label">Market Cap</div>
+                    <div class="meta-label">MCap</div>
                     <div class="meta-value">20조</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">P/E Ratio</div>
-                    <div class="meta-value">35.2</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Target</div>
-                    <div class="meta-value">₩42,000</div>
+                    <div class="meta-label">P/E</div>
+                    <div class="meta-value">19.4</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-sell">🔴 SELL</div>
-                    Regulatory pressures intensifying on platform dominance. Taxi and payment services facing new competition. Overvalued relative to growth prospects.
+                    <div class="signal signal-hold">🟡 HOLD</div>
+                    Mobility and pay services growing but regulatory scrutiny increasing. Platform diversification strategy showing mixed results.
                 </div>
             </div>
         </div>
     </div>
 
     <div id="movers" class="section">
-        <div class="movers-title">🔥 Notable US Movers</div>
+        <h2 class="section-title">📈 Notable Movers</h2>
+        
+        <div class="movers-title">🇺🇸 US Market</div>
         
         <div class="stock-card" onclick="toggleCard(this)">
             <div class="stock-header">
                 <div class="stock-left">
                     <div>
-                        <div class="stock-ticker">PLTR</div>
-                        <div class="stock-company">Palantir Technologies</div>
+                        <div class="stock-ticker">MRNA</div>
+                        <div class="stock-company">Moderna Inc</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$24.78</div>
-                    <div class="stock-change pos">+8.45% (+$1.93)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$87.45</div>
+                    <div class="stock-change pos">+$6.79 (+8.4%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Volume</div>
-                    <div class="meta-value">89.2M</div>
+                    <div class="meta-value">45.2M</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Avg Volume</div>
-                    <div class="meta-value">34.5M</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Catalyst</div>
-                    <div class="meta-value">Gov Contract</div>
+                    <div class="meta-label">Avg Vol</div>
+                    <div class="meta-value">12.1M</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Major government contract wins announced after market close. AI-powered analytics platform gaining traction across federal agencies. Strong momentum continues.
+                    New mRNA cancer therapy trial results exceeded expectations, showing 73% efficacy rate in Phase 2 trials. Potential breakthrough in oncology applications.
                 </div>
             </div>
         </div>
@@ -530,39 +485,35 @@
             <div class="stock-header">
                 <div class="stock-left">
                     <div>
-                        <div class="stock-ticker">WBD</div>
-                        <div class="stock-company">Warner Bros Discovery</div>
+                        <div class="stock-ticker">COIN</div>
+                        <div class="stock-company">Coinbase Global</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$8.42</div>
-                    <div class="stock-change neg">-6.78% (-$0.61)<span class="chevron">▼</span></div>
+                    <div class="stock-price">$142.33</div>
+                    <div class="stock-change neg">-$10.24 (-6.7%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Volume</div>
-                    <div class="meta-value">67.8M</div>
+                    <div class="meta-value">23.8M</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Avg Volume</div>
-                    <div class="meta-value">23.1M</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Catalyst</div>
-                    <div class="meta-value">Sub Miss</div>
+                    <div class="meta-label">Avg Vol</div>
+                    <div class="meta-value">8.5M</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
-                    <div class="signal signal-sell">🔴 SELL</div>
-                    Max streaming subscriber numbers significantly missed expectations. Content costs rising while subscriber growth slowing. Debt concerns mounting.
+                    <div class="signal signal-hold">🟡 HOLD</div>
+                    Cryptocurrency market volatility and regulatory concerns weigh on sentiment. Bitcoin below $50K triggering institutional selling pressure.
                 </div>
             </div>
         </div>
 
-        <div class="movers-title">🇰🇷 Notable Korea Movers</div>
-
+        <div class="movers-title">🇰🇷 Korea Market</div>
+        
         <div class="stock-card" onclick="toggleCard(this)">
             <div class="stock-header">
                 <div class="stock-left">
@@ -572,28 +523,24 @@
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">₩423,500</div>
-                    <div class="stock-change pos">+5.23% (+₩21,000)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩432,500</div>
+                    <div class="stock-change pos">+₩17,500 (+4.2%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Volume</div>
-                    <div class="meta-value">1.2M</div>
+                    <div class="meta-value">2.1M</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Avg Volume</div>
-                    <div class="meta-value">456K</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Catalyst</div>
-                    <div class="meta-value">Ford Deal</div>
+                    <div class="meta-label">Avg Vol</div>
+                    <div class="meta-value">850K</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-buy">🟢 BUY</div>
-                    Major battery supply agreement with Ford announced. Expanding US manufacturing capacity to meet growing EV demand. Strong order book visibility.
+                    Major EV battery contract win in Europe worth $8.5B over 5 years. Expanding production capacity to meet growing European EV demand.
                 </div>
             </div>
         </div>
@@ -602,33 +549,29 @@
             <div class="stock-header">
                 <div class="stock-left">
                     <div>
-                        <div class="stock-ticker">CPNG</div>
-                        <div class="stock-company">Coupang</div>
+                        <div class="stock-ticker">CP</div>
+                        <div class="stock-company">Coupang Inc</div>
                     </div>
                 </div>
                 <div class="stock-right">
-                    <div class="stock-price">$18.67</div>
-                    <div class="stock-change neg">-4.12% (-$0.80)<span class="chevron">▼</span></div>
+                    <div class="stock-price">₩28,450</div>
+                    <div class="stock-change neg">-₩1,120 (-3.8%)<span class="chevron">▼</span></div>
                 </div>
             </div>
             <div class="stock-meta">
                 <div class="meta-item">
                     <div class="meta-label">Volume</div>
-                    <div class="meta-value">12.4M</div>
+                    <div class="meta-value">1.8M</div>
                 </div>
                 <div class="meta-item">
-                    <div class="meta-label">Avg Volume</div>
-                    <div class="meta-value">8.7M</div>
-                </div>
-                <div class="meta-item">
-                    <div class="meta-label">Catalyst</div>
-                    <div class="meta-value">Cost Rises</div>
+                    <div class="meta-label">Avg Vol</div>
+                    <div class="meta-value">720K</div>
                 </div>
             </div>
             <div class="stock-analysis">
                 <div class="analysis-inner">
                     <div class="signal signal-hold">🟡 HOLD</div>
-                    Rising logistics and labor costs impacting margins. E-commerce growth slowing in Korea. International expansion showing promise but requires investment.
+                    E-commerce growth concerns amid economic slowdown. Competition from traditional retailers entering online space intensifying.
                 </div>
             </div>
         </div>
@@ -641,11 +584,11 @@
 
     <script>
         function showSection(id) {
-          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-          document.getElementById(id).classList.add('active');
-          event.target.classList.add('active');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         function toggleCard(card) { card.classList.toggle('expanded'); }
     </script>
